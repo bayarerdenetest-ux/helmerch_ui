@@ -1,0 +1,1327 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Хэлмэрч</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: glass bar → home view (hero, features, pipeline) | studio view (#yaria-tekst, #tekst-yaria, #kod-tailbar) → footer */
+:root{
+  --bg:#F3F5F9; --surface:#FFFFFF; --surface-2:#E9EDF4; --line:#D6DCE7;
+  --fg:#121A2B; --muted:#5A6479;
+  --sky:#1F4FD8; --sky-soft:#DCE5FF; --gold:#C98A12; --gold-soft:#FBEFD6;
+  --ok:#17845A; --danger:#D23B30; --code-bg:#0F1626; --code-fg:#D9E1F2; --code-hl:rgba(201,138,18,.22);
+  --glass:rgba(255,255,255,.62); --glass-strong:rgba(255,255,255,.82); --glass-line:rgba(255,255,255,.75); --glass-hi:rgba(255,255,255,.9);
+  --shadow:0 18px 50px -24px rgba(20,35,80,.38); --logo-plate:transparent; --logo-w:228px; --logo-txt:none; --logo-ink:#1A1F8C; --must-gold:#FFC20E;
+  --display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --body:"Manrope","Segoe UI",system-ui,sans-serif;
+  --mono:"JetBrains Mono",Consolas,"Courier New",monospace;
+  --r:14px;
+  --spring:cubic-bezier(.34,1.42,.5,1); --ease:cubic-bezier(.22,1,.36,1);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0B111D; --surface:#121A2A; --surface-2:#1A2438; --line:#26324A;
+  --fg:#E8EDF7; --muted:#97A3BC;
+  --sky:#7FA2FF; --sky-soft:#1C2A4E; --gold:#F0B44A; --gold-soft:#3A2C12;
+  --ok:#4FCB93; --danger:#FF7A6E; --code-bg:#070B14; --code-fg:#D9E1F2; --code-hl:rgba(240,180,74,.2);
+  --glass:rgba(20,28,46,.6); --glass-strong:rgba(22,31,50,.82); --glass-line:rgba(255,255,255,.1); --glass-hi:rgba(255,255,255,.14);
+  --shadow:0 18px 50px -20px rgba(0,0,0,.7); --logo-plate:transparent; --logo-w:33px; --logo-txt:flex; --logo-ink:#FFFFFF;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0B111D; --surface:#121A2A; --surface-2:#1A2438; --line:#26324A;
+  --fg:#E8EDF7; --muted:#97A3BC;
+  --sky:#7FA2FF; --sky-soft:#1C2A4E; --gold:#F0B44A; --gold-soft:#3A2C12;
+  --ok:#4FCB93; --danger:#FF7A6E; --code-bg:#070B14; --code-fg:#D9E1F2; --code-hl:rgba(240,180,74,.2);
+  --glass:rgba(20,28,46,.6); --glass-strong:rgba(22,31,50,.82); --glass-line:rgba(255,255,255,.1); --glass-hi:rgba(255,255,255,.14);
+  --shadow:0 18px 50px -20px rgba(0,0,0,.7); --logo-plate:transparent; --logo-w:33px; --logo-txt:flex; --logo-ink:#FFFFFF;
+  color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:1180px;margin:0 auto}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;letter-spacing:-.01em}
+button,select,textarea,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--sky);outline-offset:2px}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+
+/* glass bar */
+header.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;view-transition-name:bar;
+  background:var(--glass);backdrop-filter:blur(22px) saturate(180%);-webkit-backdrop-filter:blur(22px) saturate(180%);
+  border-bottom:1px solid var(--glass-line);box-shadow:inset 0 -1px 0 var(--line);
+  margin:0 calc(-1*max(16px,env(safe-area-inset-left,0px)))}
+header .wrap{display:flex;align-items:center;gap:22px;height:68px;padding-inline:max(16px,env(safe-area-inset-left,0px))}
+.logo{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--fg);flex:none}
+.logo-img{display:block;flex:none;height:46px;width:var(--logo-w);overflow:hidden;border-radius:10px;background:var(--logo-plate);padding:4px 6px;transition:width .5s var(--spring)}
+.logo-img img{display:block;height:38px;width:auto;max-width:none}
+.logo-text{display:var(--logo-txt);flex-direction:column;justify-content:center;color:var(--logo-ink);font-family:var(--body);font-weight:800;text-transform:uppercase;white-space:nowrap;margin-left:-6px}
+.logo-text b{font-size:10.5px;line-height:1.18;letter-spacing:.02em}
+.logo-text i{display:block;height:2px;margin:3px 0 2px;border-radius:2px;background:var(--must-gold)}
+.logo-text small{font-size:6.7px;letter-spacing:.035em}
+.logo-sep{width:1px;height:28px;background:var(--line)}
+.wordmark{font-family:var(--display);font-weight:700;font-size:17px}
+nav.links{display:flex;gap:4px}
+nav.links a{color:var(--muted);text-decoration:none;font-weight:600;font-size:15px;padding:8px 12px;border-radius:10px;transition:color .2s,background .3s var(--ease)}
+nav.links a:hover{color:var(--fg);background:var(--glass-hi)}
+nav.links a[aria-current="page"]{color:var(--fg)}
+.bar-right{margin-left:auto;display:flex;gap:10px;align-items:center}
+
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:9px 16px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--fg);
+  transition:transform .5s var(--spring),border-color .2s,background .2s,box-shadow .3s var(--ease),filter .2s}
+.btn:hover{border-color:var(--sky);transform:translateY(-1px)}
+.btn:active{transform:scale(.95);transition-duration:.12s}
+.btn.primary{background:var(--sky);border-color:var(--sky);color:var(--bg);box-shadow:0 10px 24px -14px var(--sky)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:var(--bg)}
+.btn.glass{background:var(--glass);border-color:var(--glass-line);backdrop-filter:blur(16px);box-shadow:inset 0 1px 0 var(--glass-hi)}
+.btn[disabled]{opacity:.7;cursor:progress}
+.icon-btn{width:40px;height:40px;padding:0;justify-content:center}
+
+/* MN / EN segmented switch */
+.lang{position:relative;display:inline-grid;grid-template-columns:1fr 1fr;padding:3px;border-radius:12px;background:var(--surface-2);border:1px solid var(--line)}
+.lang .thumb{position:absolute;top:3px;left:3px;width:calc(50% - 3px);height:calc(100% - 6px);border-radius:9px;background:var(--surface);
+  box-shadow:0 4px 12px -6px rgba(0,0,0,.35),inset 0 1px 0 var(--glass-hi);transition:transform .55s var(--spring)}
+.lang[data-v="en"] .thumb{transform:translateX(100%)}
+.lang button{position:relative;border:0;background:none;font-size:13px;font-weight:700;padding:6px 11px;cursor:pointer;color:var(--muted);transition:color .3s}
+.lang button[aria-pressed="true"]{color:var(--fg)}
+
+/* views */
+[data-view]{animation:viewIn .6s var(--ease) both}
+@keyframes viewIn{from{opacity:0;transform:translateY(10px);filter:blur(6px)}}
+::view-transition-old(root){animation:vtOut .3s var(--ease) both}
+::view-transition-new(root){animation:vtIn .55s var(--ease) both}
+@keyframes vtOut{to{opacity:0;transform:scale(.985);filter:blur(8px)}}
+@keyframes vtIn{from{opacity:0;transform:scale(1.015);filter:blur(8px)}}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center;padding-block:56px 40px}
+.hero>div>*{animation:rise .8s var(--ease) both}
+.hero>div>*:nth-child(2){animation-delay:.06s}.hero>div>*:nth-child(3){animation-delay:.12s}
+.hero>div>*:nth-child(4){animation-delay:.18s}.hero>div>*:nth-child(5){animation-delay:.24s}
+.hero .live{animation:rise 1s var(--ease) .15s both}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}}
+.hero h1{font-size:clamp(30px,4.4vw,52px);line-height:1.08;margin-top:14px}
+.hero h1 em{font-style:normal;color:var(--sky)}
+.hero p.lead{color:var(--muted);font-size:18px;max-width:56ch;margin:18px 0 26px}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+.hero-facts{display:flex;gap:28px;margin-top:30px;flex-wrap:wrap}
+.hero-facts div{font-size:14px;color:var(--muted)}
+.hero-facts b{display:block;font-family:var(--display);font-size:20px;color:var(--fg);font-variant-numeric:tabular-nums}
+.live{background:var(--glass-strong);backdrop-filter:blur(20px);border:1px solid var(--glass-line);border-radius:22px;padding:22px;box-shadow:var(--shadow),inset 0 1px 0 var(--glass-hi)}
+.live-top{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted);font-weight:600}
+.rec-dot{width:10px;height:10px;border-radius:50%;background:#E0453A;animation:pulse 1.4s infinite}
+@keyframes pulse{50%{opacity:.35}}
+.wave{display:flex;align-items:center;gap:3px;height:70px;margin:18px 0}
+.wave i{flex:1;background:var(--sky);border-radius:3px;min-height:4px;opacity:.85;transition:background .3s}
+.wave.anim i{animation:bob 1.1s ease-in-out infinite}
+@keyframes bob{50%{transform:scaleY(.45)}}
+.live-text{font-size:17px;font-weight:500;min-height:3.2em}
+.live-text .caret{display:inline-block;width:2px;height:1.1em;background:var(--gold);vertical-align:-3px;margin-left:2px;animation:pulse 1s infinite}
+.live-foot{display:flex;justify-content:space-between;margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);font-size:13px;color:var(--muted)}
+
+section{padding-block:40px;scroll-margin-top:80px}
+.sec-head{display:flex;align-items:end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:22px}
+.sec-head h2{font-size:clamp(22px,2.6vw,32px);margin-top:8px}
+.sec-head p{color:var(--muted);max-width:52ch;margin:0}
+
+/* studio */
+.crumbs{display:flex;gap:8px;align-items:center;font-size:14px;color:var(--muted);padding-top:28px}
+.crumbs a{color:var(--muted);text-decoration:none;font-weight:600}
+.crumbs a:hover{color:var(--sky)}
+.studio-sec{padding-top:14px}
+.studio{background:var(--surface);border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:var(--shadow)}
+.tabs{position:relative;display:flex;gap:4px;padding:8px;background:var(--surface-2);border-bottom:1px solid var(--line);overflow:hidden}
+.tab-ind{position:absolute;top:8px;left:0;height:calc(100% - 16px);border-radius:12px;background:var(--glass-strong);
+  border:1px solid var(--glass-line);box-shadow:0 8px 20px -10px rgba(0,0,0,.35),inset 0 1px 0 var(--glass-hi)}
+.tab-ind.ready{transition:transform .6s var(--spring),width .6s var(--spring)}
+.tab{position:relative;flex:1;min-width:max-content;border:0;background:transparent;border-radius:12px;padding:12px 16px;font-weight:700;cursor:pointer;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:10px;transition:color .3s,transform .4s var(--spring)}
+.tab:active{transform:scale(.97)}
+.tab small{font-weight:600;font-size:12px;opacity:.8}
+.tab[aria-selected="true"]{color:var(--fg)}
+.tab svg{width:18px;height:18px}
+.panel{padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.panel.enter{animation:panelIn .55s var(--ease) both}
+.panel.enter>*:last-child{animation:panelIn .65s var(--ease) .05s both}
+@keyframes panelIn{from{opacity:0;transform:translateY(12px) scale(.99);filter:blur(5px)}}
+.panel>*{min-width:0}
+.col-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.col-title h3{font-size:15px;font-family:var(--body);font-weight:700}
+.chip{font-size:12px;font-weight:700;border-radius:999px;padding:4px 10px;background:var(--sky-soft);color:var(--sky)}
+.chip.gold{background:var(--gold-soft);color:var(--gold)}
+.chip.ok{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok)}
+
+.drop{display:block;border:2px dashed var(--line);border-radius:var(--r);padding:28px;text-align:center;background:var(--bg);cursor:pointer;transition:border-color .2s,transform .5s var(--spring),background .3s}
+.drop:hover,.drop.over{border-color:var(--sky)}
+.drop.over{transform:scale(1.015);background:var(--sky-soft)}
+.drop b{display:block;font-size:16px;margin:8px 0 4px}
+.drop p{margin:0;color:var(--muted);font-size:14px}
+.mic{width:64px;height:64px;border-radius:50%;border:0;background:var(--sky);color:var(--bg);display:grid;place-items:center;margin:0 auto;cursor:pointer;
+  box-shadow:0 12px 26px -12px var(--sky);transition:transform .5s var(--spring),background .3s}
+.mic:hover{transform:scale(1.06)}
+.mic:active{transform:scale(.92)}
+.mic.on{background:#E0453A;box-shadow:0 0 0 8px color-mix(in srgb,#E0453A 18%,transparent)}
+.or{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:13px;margin:16px 0}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
+.file-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.file-row .meta{flex:1;min-width:0}
+.file-row .meta b{display:block;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.file-row .meta span{font-size:12px;color:var(--muted)}
+.bar-prog{height:6px;border-radius:9px;background:var(--surface-2);overflow:hidden;margin-top:6px}
+.bar-prog i{display:block;height:100%;background:var(--sky);width:0;transition:width .3s var(--ease)}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+label.f{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:var(--muted)}
+select,textarea,input[type=text],input[type=password]{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:var(--fg);transition:border-color .2s,box-shadow .3s var(--ease)}
+select:focus,textarea:focus,input[type=text]:focus,input[type=password]:focus{outline:none;border-color:var(--sky);box-shadow:0 0 0 4px var(--sky-soft)}
+input[type=range]{accent-color:var(--sky)}
+
+.out{border:1px solid var(--line);border-radius:var(--r);background:var(--bg);display:flex;flex-direction:column;min-height:100%}
+.out-body{padding:16px;flex:1;overflow:auto;max-height:420px}
+.seg{display:grid;grid-template-columns:auto 1fr;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+.seg:last-child{border-bottom:0}
+.seg time{font-family:var(--mono);font-size:12px;color:var(--sky);padding-top:3px;font-variant-numeric:tabular-nums}
+.seg .who{font-size:12px;font-weight:700;color:var(--muted);display:block}
+.out-foot{display:flex;gap:8px;flex-wrap:wrap;padding:12px;border-top:1px solid var(--line);background:var(--surface)}
+.out-foot .btn{padding:7px 12px;font-size:14px}
+
+textarea.big{width:100%;min-height:210px;resize:vertical;font-size:16px;line-height:1.6}
+.counter{font-size:12px;color:var(--muted);text-align:right;margin-top:6px;font-variant-numeric:tabular-nums}
+.voices{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.voice{border:1px solid var(--line);background:var(--bg);border-radius:12px;padding:10px;cursor:pointer;text-align:left;transition:transform .5s var(--spring),border-color .2s,background .3s}
+.voice:active{transform:scale(.96)}
+.voice b{display:block;font-size:14px}
+.voice span{font-size:12px;color:var(--muted)}
+.voice[aria-pressed="true"]{border-color:var(--sky);background:var(--sky-soft)}
+
+.player{display:flex;align-items:center;gap:14px;padding:14px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+.play{width:46px;height:46px;flex:none;border-radius:50%;border:0;background:var(--gold);color:var(--bg);display:grid;place-items:center;cursor:pointer;transition:transform .5s var(--spring)}
+.play:hover{transform:scale(1.07)}
+.play:active{transform:scale(.9)}
+.player .wave{height:42px;margin:0;flex:1;min-width:0}
+.player .wave i{background:var(--line);opacity:1}
+.player .wave i.done{background:var(--gold)}
+.player time{font-family:var(--mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+
+.code-box{background:var(--code-bg);border-radius:var(--r);overflow:hidden;border:1px solid var(--line)}
+.code-top{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.08)}
+.code-top select{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12);color:var(--code-fg);padding:6px 10px;font-size:13px}
+.code-top .dots{display:flex;gap:6px;margin-right:auto}
+.code-top .dots i{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.18)}
+.code-top .det{font-size:12px;color:#8FE3B5;font-weight:600}
+pre.code{margin:0;padding:12px 0;overflow-x:auto;font-family:var(--mono);font-size:13.5px;line-height:1.7;color:var(--code-fg)}
+pre.code .ln{display:block;padding:0 14px 0 0;transition:background .35s var(--ease),box-shadow .35s var(--ease);white-space:pre}
+pre.code .ln::before{content:attr(data-n);display:inline-block;width:3em;padding-right:1em;text-align:right;color:rgba(217,225,242,.35)}
+pre.code .ln.hl{background:var(--code-hl);box-shadow:inset 3px 0 0 var(--gold)}
+.k{color:#C792EA}.s{color:#C3E88D}.fn{color:#82AAFF}.n{color:#F78C6C}.c{color:#6B7A99;font-style:italic}
+textarea.code-edit{width:100%;min-height:236px;border:0;border-radius:0;background:var(--code-bg);color:var(--code-fg);font-family:var(--mono);font-size:13.5px;padding:12px 16px;resize:vertical}
+.mode{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.mode button{border:0;background:transparent;padding:6px 12px;font-size:13px;font-weight:700;cursor:pointer;color:var(--muted);transition:background .3s var(--ease),color .3s}
+.mode button[aria-pressed="true"]{background:var(--sky);color:var(--bg)}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.step{display:grid;grid-template-columns:auto 1fr;gap:12px;padding:12px;border-radius:12px;border:1px solid transparent;cursor:pointer;transition:background .35s var(--ease),border-color .35s,transform .5s var(--spring)}
+.step:hover{background:var(--surface)}
+.step.active{background:var(--gold-soft);border-color:var(--gold);transform:translateX(3px)}
+.lines{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--gold);border:1px solid var(--gold);border-radius:6px;padding:2px 6px;height:max-content;white-space:nowrap}
+.step b{display:block;font-size:15px;margin-bottom:2px}
+.step p{margin:0;color:var(--muted);font-size:14px}
+.step.active p{color:var(--fg)}
+.summary{padding:12px 14px;border-radius:12px;background:var(--sky-soft);font-size:14px;margin-bottom:12px}
+.summary b{color:var(--sky)}
+
+/* flow between tools */
+.flow{display:flex;align-items:center;gap:8px 10px;flex-wrap:wrap;margin:-6px 0 18px;font-size:13px;color:var(--muted)}
+.flow a{display:inline-flex;align-items:center;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--fg);text-decoration:none;font-weight:600;
+  transition:transform .5s var(--spring),border-color .2s,background .3s,color .3s}
+.flow a:hover{transform:translateY(-1px);border-color:var(--sky)}
+.flow a[aria-current="true"]{background:var(--sky-soft);border-color:var(--sky);color:var(--sky)}
+.flow .edge{font-family:var(--mono);font-size:12px;white-space:nowrap}
+.flow-note{flex-basis:100%;font-size:12.5px}
+.flow .edge::after{content:none}
+.src{display:flex;gap:6px;align-items:center;font-size:13px;padding:8px 12px;border-radius:10px;background:var(--sky-soft);margin-bottom:10px;animation:panelIn .5s var(--ease) both}
+.src .linkish{margin-left:auto}
+
+/* code editor with highlight layer */
+.panel.single{grid-template-columns:1fr}
+.code-main{display:flex;flex-direction:column;gap:14px}
+.code-main .col-title{margin:0}
+.hint-txt{font-size:13px;color:var(--muted)}
+.code-top{flex-wrap:wrap}
+.ct-btn{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:var(--code-fg);border-radius:8px;padding:5px 10px;font-size:12.5px;font-weight:600;cursor:pointer;transition:background .2s,transform .4s var(--spring)}
+.ct-btn:hover{background:rgba(255,255,255,.12)}
+.ct-btn:active{transform:scale(.95)}
+.editor{display:flex;background:var(--code-bg);font-family:var(--mono);font-size:13.5px;line-height:1.7}
+.gutter{flex:none;min-width:3.2em;padding:12px 10px 12px 0;text-align:right;color:rgba(217,225,242,.35);user-select:none}
+.gutter span{display:block}
+.ed-area{position:relative;flex:1;min-width:0;overflow:hidden}
+.hl-layer{position:absolute;top:0;left:0;min-width:100%;margin:0;padding:12px 16px 12px 6px;color:var(--code-fg);font:inherit;white-space:pre;pointer-events:none;tab-size:4}
+.hl-layer .ln{display:block;margin:0 -16px 0 -6px;padding:0 16px 0 6px;transition:background .35s var(--ease),box-shadow .35s var(--ease)}
+.hl-layer .ln.hl{background:var(--code-hl);box-shadow:inset 3px 0 0 var(--gold)}
+#codeInput{position:relative;display:block;width:100%;min-height:260px;margin:0;border:0;border-radius:0;background:transparent;color:transparent;caret-color:#FFFFFF;
+  font:inherit;padding:12px 16px 12px 6px;white-space:pre;overflow-x:auto;overflow-y:hidden;resize:none;tab-size:4}
+#codeInput:focus{box-shadow:none;outline:none}
+#codeInput::placeholder{color:rgba(217,225,242,.4)}
+#codeInput::selection{background:rgba(127,162,255,.35);color:transparent}
+.code-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.kbd{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:2px 7px}
+.stages{list-style:none;margin:0;padding:12px 14px;display:flex;gap:10px 22px;flex-wrap:wrap;border:1px solid var(--line);border-radius:12px;background:var(--bg);font-size:14px;color:var(--muted)}
+.stages li{display:flex;align-items:center;gap:8px;transition:color .3s}
+.stages li::before{content:"";width:14px;height:14px;flex:none;border-radius:50%;border:2px solid var(--line);box-sizing:border-box}
+.stages li.doing{color:var(--fg)}
+.stages li.doing::before{border-color:var(--sky);border-right-color:transparent;animation:spin .7s linear infinite}
+.stages li.done{color:var(--ok)}
+.stages li.done::before{background:var(--ok);border-color:var(--ok);box-shadow:inset 0 0 0 2px var(--bg)}
+
+/* explanation result */
+.enter{animation:panelIn .6s var(--ease) both}
+.result{display:flex;flex-direction:column;gap:12px;padding:18px;border:1px solid var(--line);border-radius:18px;background:var(--bg);scroll-margin-top:84px;transition:opacity .3s}
+.result .player{background:var(--surface)}
+.result.stale{opacity:.6}
+.stale-note{display:none;margin:0;font-size:13px;color:var(--gold);font-weight:700}
+.result.stale .stale-note{display:block}
+.voice-src{font-size:12px;color:var(--muted);margin-top:-4px}
+.res-actions{display:flex;gap:8px;flex-wrap:wrap}
+.summary code,.step code,.answer code,.q code,.task code{font-family:var(--mono);font-size:.88em;background:var(--surface-2);padding:1px 5px;border-radius:5px;overflow-wrap:anywhere}
+.ask{display:flex;flex-direction:column;gap:10px;padding-top:14px;border-top:1px dashed var(--line)}
+.ask-row{display:flex;gap:10px;align-items:center}
+.ask-row input{flex:1;min-width:0}
+.mic.sm{width:44px;height:44px;flex:none;margin:0}
+.answer{padding:14px;border-radius:12px;background:var(--surface);border:1px solid var(--line);display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.answer p{margin:0}
+.ans-q{font-size:13px;color:var(--muted)}
+
+/* practice */
+.practice{display:flex;flex-direction:column;gap:16px;padding-top:6px}
+.pr-title{font-size:20px;margin-top:6px}
+.pr-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.pr-grid>*{min-width:0}
+.card{border:1px solid var(--line);border-radius:16px;background:var(--bg);padding:16px}
+.q{padding:12px 0;border-bottom:1px solid var(--line)}
+.q:last-child{border-bottom:0;padding-bottom:0}
+.qq{display:flex;gap:10px;margin:0 0 10px;font-weight:600;font-size:15px}
+.qn{flex:none;width:24px;height:24px;border-radius:50%;background:var(--sky-soft);color:var(--sky);display:grid;place-items:center;font-size:12px;font-weight:700}
+.qopts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.qopt{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 12px;font-size:14px;cursor:pointer;transition:transform .45s var(--spring),border-color .2s,background .3s}
+.qopt:hover:not(:disabled){border-color:var(--sky)}
+.qopt:active:not(:disabled){transform:scale(.97)}
+.qopt:disabled{cursor:default}
+.qopt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,var(--surface))}
+.qopt.wrong{border-color:var(--danger);background:color-mix(in srgb,var(--danger) 12%,var(--surface))}
+.why{margin:10px 0 0;font-size:13.5px;animation:panelIn .4s var(--ease) both}
+.why.ok{color:var(--ok)}
+.why.bad{color:var(--danger)}
+.task-head{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.task-head b{margin-right:auto;font-size:15px}
+.task-nav{width:30px;height:30px;font-size:18px;line-height:1}
+.mini{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+#taskText{margin:8px 0 10px;font-size:14.5px}
+#taskInput{min-height:150px;border:1px solid var(--line);border-radius:12px;white-space:pre;tab-size:4}
+.task-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.task-actions .btn{padding:7px 12px;font-size:14px}
+.task-res{margin-top:10px;padding:12px 14px;border-radius:12px;font-size:14px}
+.task-res.ok{background:color-mix(in srgb,var(--ok) 14%,transparent);color:var(--ok)}
+.task-res.bad{background:color-mix(in srgb,var(--danger) 12%,transparent);color:var(--danger)}
+.task-res.hint{background:var(--gold-soft);color:var(--fg)}
+.task-res ul{margin:6px 0 0;padding-left:18px}
+.pr-note{margin:0;font-size:12.5px;color:var(--muted)}
+
+/* features / pipeline */
+.feat{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.feat article{padding:22px;border-radius:18px;border:1px solid var(--line);background:var(--surface)}
+.feat article[data-jump]{cursor:pointer;transition:border-color .25s,transform .6s var(--spring),box-shadow .4s var(--ease)}
+.feat article[data-jump]:hover{border-color:var(--sky);transform:translateY(-4px);box-shadow:var(--shadow)}
+.feat article[data-jump]:active{transform:scale(.98);transition-duration:.15s}
+.feat h3{font-size:17px;margin:14px 0 8px}
+.feat p{margin:0;color:var(--muted);font-size:15px}
+.feat .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:var(--sky-soft);color:var(--sky);transition:transform .6s var(--spring)}
+.feat article:hover .ic{transform:scale(1.1) rotate(-4deg)}
+.pipe{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--surface)}
+.pipe div{padding:20px;border-right:1px solid var(--line);position:relative}
+.pipe div:last-child{border-right:0}
+.pipe small{font-family:var(--mono);font-size:12px;color:var(--gold);font-weight:600}
+.pipe b{display:block;font-family:var(--display);font-size:15px;margin:6px 0}
+.pipe p{margin:0;color:var(--muted);font-size:14px}
+.pipe code{font-family:var(--mono);font-size:12px;background:var(--surface-2);padding:2px 6px;border-radius:5px;color:var(--fg)}
+.note{margin-top:14px;font-size:14px;color:var(--muted)}
+footer{border-top:1px solid var(--line);margin-top:30px;padding-block:28px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--muted);font-size:14px}
+
+/* credit */
+body{position:relative}
+.credit{position:absolute;right:max(6px,env(safe-area-inset-right,0px));bottom:4px;font-size:7px;font-weight:600;letter-spacing:.04em;color:var(--muted);opacity:.6;pointer-events:none;white-space:nowrap}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,24px) scale(.94);opacity:0;pointer-events:none;
+  background:var(--glass-strong);backdrop-filter:blur(20px) saturate(180%);color:var(--fg);border:1px solid var(--glass-line);box-shadow:var(--shadow),inset 0 1px 0 var(--glass-hi);
+  padding:11px 18px;border-radius:14px;font-weight:600;font-size:14px;z-index:40;max-width:calc(100% - 32px);transition:transform .55s var(--spring),opacity .25s}
+.toast.show{transform:translate(-50%,0) scale(1);opacity:1}
+
+/* login dialog */
+.modal{position:fixed;inset:0;z-index:30;display:grid;place-items:center;
+  padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.scrim{position:absolute;inset:0;background:rgba(8,14,30,.32);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);opacity:0;transition:opacity .35s var(--ease)}
+.modal.open .scrim{opacity:1}
+.sheet{position:relative;width:min(420px,100%);background:var(--glass-strong);backdrop-filter:blur(30px) saturate(180%);-webkit-backdrop-filter:blur(30px) saturate(180%);
+  border:1px solid var(--glass-line);border-radius:26px;padding:28px;box-shadow:0 30px 80px -30px rgba(0,0,0,.55),inset 0 1px 0 var(--glass-hi);
+  transform:translateY(24px) scale(.92);opacity:0;transition:transform .6s var(--spring),opacity .25s}
+.modal.open .sheet{transform:none;opacity:1}
+.sheet-head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.shield{display:block;width:30px;height:46px;overflow:hidden;border-radius:8px;background:var(--logo-plate);padding:4px}
+.shield img{height:38px;width:auto;max-width:none;display:block}
+.sheet h2{font-size:22px}
+.sheet .sub{color:var(--muted);font-size:14px;margin:6px 0 20px}
+.close{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;border:0;background:var(--surface-2);cursor:pointer;display:grid;place-items:center;color:var(--muted);transition:transform .5s var(--spring)}
+.close:hover{transform:rotate(90deg)}
+.fields{display:flex;flex-direction:column;gap:14px}
+.fields input{width:100%;font-size:16px;padding:12px 14px}
+.fields input[type=checkbox]{width:auto;padding:0}
+#studentCode{text-transform:uppercase;letter-spacing:.06em;font-family:var(--mono)}
+.pw{position:relative}
+.pw input{padding-right:46px}
+.pw button{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:36px;height:36px;border:0;background:none;cursor:pointer;color:var(--muted);border-radius:8px;display:grid;place-items:center}
+.form-row{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:14px;flex-wrap:wrap}
+.form-row label{display:flex;gap:8px;align-items:center;color:var(--muted);cursor:pointer}
+.form-row input{accent-color:var(--sky)}
+.linkish{border:0;background:none;color:var(--sky);font-weight:600;cursor:pointer;padding:0}
+.err{color:var(--danger);font-size:13px;font-weight:600;margin:0;min-height:1.2em}
+.sheet .btn.primary{width:100%;justify-content:center;padding:13px;font-size:16px}
+.spin{width:16px;height:16px;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.shake{animation:shake .45s var(--ease)}
+@keyframes shake{20%{transform:translateX(-8px)}40%{transform:translateX(7px)}60%{transform:translateX(-4px)}80%{transform:translateX(2px)}}
+
+@media (max-width:1080px){
+  .logo-img{width:33px}
+  .logo-text{display:none}
+  nav.links a{padding:8px 9px}
+}
+@media (max-width:900px){
+  .hero,.panel,.pr-grid{grid-template-columns:1fr}
+  .feat{grid-template-columns:1fr 1fr}
+  .pipe{grid-template-columns:1fr 1fr}
+  .pipe div:nth-child(2){border-right:0}
+  .pipe div:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  nav.links{display:none}
+}
+@media (max-width:560px){
+  .feat,.pipe,.opts{grid-template-columns:1fr}
+  .pipe div{border-right:0;border-bottom:1px solid var(--line)}
+  .voices{grid-template-columns:1fr 1fr}
+  .panel{padding:16px}
+  .tabs{overflow:hidden;gap:2px;padding:6px}
+  .flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:8px 4px}
+  .flow a{justify-content:center;text-align:center;padding:7px 6px;font-size:12px;line-height:1.2;min-width:0;align-self:stretch;border-radius:12px}
+  .flow .edge{font-size:0}
+  .flow .edge::after{content:attr(data-arrow);font-size:14px;color:var(--muted)}
+  .flow-note{grid-column:1/-1;text-align:center}
+  .tab-ind{top:6px;height:calc(100% - 12px)}
+  .tab{flex:1 1 0;min-width:0;flex-direction:column;gap:4px;padding:9px 4px;font-size:12.5px;line-height:1.25;text-align:center}
+  .tab small{display:none}
+  .qopts{grid-template-columns:1fr}
+  .kbd{display:none}
+  header .wrap{gap:12px}
+  .logo{gap:10px}
+  .login-txt{display:none}
+  #loginBtn{width:40px;padding:0;justify-content:center}
+  .sheet{padding:22px}
+}
+@media (max-width:380px){.logo-sep,.wordmark{display:none}}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,::view-transition-old(root),::view-transition-new(root){animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="logo" href="#home" aria-label="Хэлмэрч · ШУТИС">
+      <span class="logo-img"><img src="must-logo.webp" alt="ШУТИС" width="216" height="38"></span>
+      <span class="logo-text" aria-hidden="true"><b>Монгол Улсын Шинжлэх Ухаан</b><b>Технологийн Их Сургууль</b><i></i><small>Mongolian University of Science and Technology</small></span>
+      <span class="logo-sep"></span>
+      <span class="wordmark">Хэлмэрч</span>
+    </a>
+    <nav class="links">
+      <a href="#yaria-tekst" data-nav="studio" data-i18n="nav.studio">Студи</a>
+      <a href="#features" data-i18n="nav.features">Боломжууд</a>
+      <a href="#how" data-i18n="nav.how">Хэрхэн ажилладаг</a>
+    </nav>
+    <div class="bar-right">
+      <div class="lang" id="lang" data-v="mn" role="group" aria-label="Хэл / Language">
+        <span class="thumb"></span>
+        <button data-lang="mn" aria-pressed="true">МН</button>
+        <button data-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <button class="btn icon-btn" id="themeBtn" data-i18n-aria="theme" aria-label="Өнгөний горим солих">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <button class="btn primary" id="loginBtn" aria-haspopup="dialog">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+        <span class="login-txt" data-i18n="login">Нэвтрэх</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- HOME -->
+  <div data-view="home">
+    <div class="hero">
+      <div>
+        <span class="eyebrow" data-i18n="hero.eyebrow">Монгол хэлний AI туслах</span>
+        <h1 data-i18n-html="hero.title">Яриаг <em>текст</em>, текстийг <em>дуу</em>, кодыг ойлгомжтой <em>тайлбар</em> болгоно</h1>
+        <p class="lead" data-i18n="hero.lead">Бичлэгээ оруул, текстээ бич, эсвэл Python, Java, JavaScript кодоо буулга. Хэлмэрч монголоор бичгээр болон дуугаар тайлбарлаж өгнө.</p>
+        <div class="hero-cta">
+          <a class="btn primary" href="#yaria-tekst" data-i18n="hero.cta1">Студи нээх</a>
+          <a class="btn glass" href="#how" data-i18n="hero.cta2">Хэрхэн ажилладаг вэ?</a>
+        </div>
+        <div class="hero-facts">
+          <div><b data-i18n="f1b">3 горим</b><span data-i18n="f1">Яриа · Текст · Код</span></div>
+          <div><b data-i18n="f2b">20+ хэл</b><span data-i18n="f2">програмчлалын</span></div>
+          <div><b>OmniVoice</b><span data-i18n="f3">монгол дуу хоолой</span></div>
+        </div>
+      </div>
+      <div class="live" data-i18n-aria="live.aria" aria-label="Шууд бичлэгийн жишээ">
+        <div class="live-top"><span class="rec-dot"></span><span data-i18n="live.status">Шууд хөрвүүлж байна · 00:07</span></div>
+        <div class="wave anim" id="heroWave"></div>
+        <div class="live-text" id="heroText"></div>
+        <div class="live-foot"><span data-i18n="live.lang">Монгол (mn-MN)</span><span data-i18n="live.acc">Нарийвчлал 96%</span></div>
+      </div>
+    </div>
+
+    <section id="features">
+      <div class="sec-head"><div><span class="eyebrow" data-i18n="feat.eyebrow">Боломжууд</span><h2 data-i18n="feat.title">Монгол хэрэглэгчид зориулсан</h2></div></div>
+      <div class="feat">
+        <article data-jump="yaria-tekst" role="link" tabindex="0"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/></svg></div><h3 data-i18n="feat1.h">Яриаг текст болгоно</h3><p data-i18n="feat1.p">Микрофон эсвэл бичлэгээс. Хэн ярьсныг ялгаж, цаг тэмдэглэнэ. Хадмал (.srt) гаргана.</p></article>
+        <article data-jump="tekst-yaria" role="link" tabindex="0"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5 6 9H2v6h4l5 4V5zM15.5 8.5a5 5 0 0 1 0 7"/></svg></div><h3 data-i18n="feat2.h">Текстийг уншина</h3><p data-i18n="feat2.p">OmniVoice-ийн монгол дуу хоолой. Хурд, өнгө аясыг тохируулж, өөрийн дуугаар ч уншуулна.</p></article>
+        <article data-jump="kod-tailbar" role="link" tabindex="0"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg></div><h3 data-i18n="feat3.h">Кодыг тайлбарлана</h3><p data-i18n="feat3.p">Python, Java, JS, C++, Go гэх мэт. Мөр бүрээр бичгээр тайлбарлаж, зэрэг дуугаар уншина.</p></article>
+      </div>
+    </section>
+
+    <section id="how">
+      <div class="sec-head"><div><span class="eyebrow" data-i18n="how.eyebrow">Хэрхэн ажилладаг</span><h2 data-i18n="how.title">Ард талын бүтэц</h2></div><p data-i18n="how.desc">PHP ашиглахгүй. Frontend нь Next.js, backend нь Python (FastAPI).</p></div>
+      <div class="pipe">
+        <div><small data-i18n="p1s">01 · Оролт</small><b data-i18n="p1b">Вэб интерфэйс</b><p data-i18n="p1p">Next.js + React. Аудио, текст, код хүлээн авна.</p></div>
+        <div><small data-i18n="p2s">02 · Яриа таних</small><b data-i18n="p2b">STT загвар</b><p data-i18n-html="p2p"><code>Whisper</code> монгол хэл дээр нарийвчлан тааруулсан.</p></div>
+        <div><small data-i18n="p3s">03 · Ойлгох</small><b data-i18n="p3b">LLM тайлбар</b><p data-i18n="p3p">Кодыг мөр мөрөөр задлан монголоор тайлбар бичнэ.</p></div>
+        <div><small data-i18n="p4s">04 · Дуу</small><b>OmniVoice</b><p data-i18n="p4p">Текст, тайлбарыг монгол дуу хоолой болгоно.</p></div>
+      </div>
+      <p class="note" data-i18n="how.note">Дугаар нь өгөгдөл дамжих дарааллыг илэрхийлнэ: код тайлбарлах үед 01 → 03 → 04, яриа хөрвүүлэх үед 01 → 02.</p>
+    </section>
+  </div>
+
+  <!-- STUDIO -->
+  <div data-view="studio" hidden>
+    <nav class="crumbs" aria-label="breadcrumb"><a href="#home" data-i18n="crumb.home">Нүүр</a><span>/</span><span data-i18n="nav.studio">Студи</span></nav>
+    <section class="studio-sec">
+      <div class="sec-head">
+        <div><span class="eyebrow" data-i18n="st.eyebrow">Студи</span><h2 data-i18n="st.title">Нэг дэлгэц, гурван ажил</h2></div>
+        <p data-i18n="st.desc">Доорх жишээнүүд урьдчилан бэлдсэн өгөгдөл. Жинхэнэ сервер холбогдоход яг ийм байдлаар ажиллана.</p>
+      </div>
+      <div class="flow" id="flow">
+        <a href="#yaria-tekst" data-f="stt" data-i18n="t1">Яриа → Текст</a>
+        <span class="edge" data-arrow="→">— <span data-i18n="flow.a">текст</span> →</span>
+        <a href="#tekst-yaria" data-f="tts" data-i18n="t2">Текст → Яриа</a>
+        <span class="edge" data-arrow="←">← <span data-i18n="flow.b">тайлбар</span> —</span>
+        <a href="#kod-tailbar" data-f="code" data-i18n="t3">Код тайлбарлах</a>
+        <span class="flow-note" data-i18n="flow.c">Код хэсэгт дуугаар асуухад Яриа → Текст ашиглагдана.</span>
+      </div>
+
+      <div class="studio">
+        <div class="tabs" role="tablist">
+          <span class="tab-ind" id="tabInd"></span>
+          <button class="tab" role="tab" aria-selected="true" data-tab="stt">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v4"/></svg>
+            <span data-i18n="t1">Яриа → Текст</span> <small data-i18n="t1s">бичлэг, микрофон</small></button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="tts">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5 6 9H2v6h4l5 4V5zM15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
+            <span data-i18n="t2">Текст → Яриа</span> <small>OmniVoice</small></button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="code">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg>
+            <span data-i18n="t3">Код тайлбарлах</span> <small data-i18n="t3s">бичиг + дуу</small></button>
+        </div>
+
+        <!-- STT -->
+        <div class="panel" data-panel="stt">
+          <div>
+            <div class="col-title"><h3 data-i18n="stt.in">Яриа оруулах</h3><span class="chip">mp3 · wav · m4a · ogg</span></div>
+            <div style="text-align:center">
+              <button class="mic" id="micBtn" data-i18n-aria="stt.mic" aria-label="Микрофоноор бичих">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v4"/></svg>
+              </button>
+              <p style="margin:10px 0 0;font-size:14px;color:var(--muted)" id="micHint">Дарж ярьж эхэлнэ үү</p>
+            </div>
+            <div class="or" data-i18n="or">эсвэл</div>
+            <label class="drop" id="drop" for="audioFile">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--sky)"><path d="M12 16V4M6 10l6-6 6 6M4 20h16"/></svg>
+              <b data-i18n="drop.t">Аудио файлаа энд чирж оруулна уу</b>
+              <p data-i18n="drop.s">эсвэл дарж сонгоно · 200MB хүртэл</p>
+              <input type="file" id="audioFile" accept="audio/*" hidden>
+            </label>
+            <div class="file-row" style="margin-top:12px">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--gold);flex:none"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              <div class="meta"><b id="fileName">uulzalt_2026-11-02.m4a</b><span id="fileState">2:14 мин · Боловсруулж дууссан</span><div class="bar-prog"><i id="fileProg" style="width:100%"></i></div></div>
+            </div>
+            <div class="opts">
+              <label class="f" for="sttLang"><span data-i18n="stt.lang">Хэл</span><select id="sttLang"><option data-i18n="o.mn">Монгол</option><option data-i18n="o.mix">Монгол + Англи холимог</option><option data-i18n="o.en">Англи</option></select></label>
+              <label class="f" for="sttSpk"><span data-i18n="stt.spk">Ярьж буй хүмүүс</span><select id="sttSpk"><option data-i18n="o.auto">Автоматаар ялгах</option><option data-i18n="o.p1">1 хүн</option><option data-i18n="o.p2">2 хүн</option></select></label>
+            </div>
+          </div>
+          <div class="out">
+            <div class="col-title" style="padding:14px 16px 0"><h3 data-i18n="stt.out">Гарсан текст</h3><span class="chip ok" data-i18n="stt.segs">✓ 4 хэсэг</span></div>
+            <div class="out-body" id="transcript">
+              <div class="seg"><time>00:00</time><div><span class="who" data-spk="1">Илтгэгч 1</span>Сайн байцгаана уу. Өнөөдөр бид шинэ вэб сайтын төлөвлөгөөг хэлэлцэнэ.</div></div>
+              <div class="seg"><time>00:31</time><div><span class="who" data-spk="2">Илтгэгч 2</span>Эхний шатанд дуу хоолойг текст болгох хэсгийг хийе гэж бодож байна.</div></div>
+              <div class="seg"><time>01:05</time><div><span class="who" data-spk="1">Илтгэгч 1</span>Тийм. Дараа нь код тайлбарлах модулийг нэмээд OmniVoice-оор уншуулна.</div></div>
+              <div class="seg"><time>01:48</time><div><span class="who" data-spk="2">Илтгэгч 2</span>Ирэх долоо хоногт анхны хувилбарыг туршиж үзье.</div></div>
+            </div>
+            <div class="out-foot">
+              <button class="btn" data-copy="transcript" data-i18n="copy">Хуулах</button>
+              <button class="btn" data-toast="t.dl" data-i18n="dl.txt">.txt татах</button>
+              <button class="btn" data-toast="t.dl" data-i18n="dl.srt">.srt хадмал</button>
+              <button class="btn gold" data-goto="tekst-yaria" data-i18n="toTTS">Дуугаар уншуулах →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TTS -->
+        <div class="panel" data-panel="tts" hidden>
+          <div>
+            <div class="col-title"><h3 data-i18n="tts.in">Унших текст</h3><span class="chip" data-i18n="tts.script">Кирилл · Латин</span></div>
+            <div class="src" id="ttsSrc" hidden><span data-i18n="src.l">Эх сурвалж:</span> <b id="ttsSrcName"></b><button type="button" class="linkish" id="ttsSrcBack" data-i18n="src.back">Буцах</button></div>
+            <textarea class="big" id="ttsText">Сайн байна уу! Би Хэлмэрч байна. Таны бичсэн текстийг монгол хэлээр, байгалийн жам ёсны дуу хоолойгоор уншиж өгнө. Урт нийтлэл, хичээлийн материал, мэдээ гээд юуг ч сонсож болно.</textarea>
+            <div class="counter"><span id="ttsCount">0</span> / 5000 <span data-i18n="chars">тэмдэгт</span></div>
+            <div class="col-title" style="margin-top:14px"><h3 data-i18n="tts.voice">Дуу хоолой</h3><span class="chip gold">OmniVoice</span></div>
+            <div class="voices" id="voices">
+              <button class="voice" aria-pressed="true"><b data-i18n="v1">Сараа</b><span data-i18n="v1s">Эмэгтэй · дулаан</span></button>
+              <button class="voice" aria-pressed="false"><b data-i18n="v2">Тэмүүлэн</b><span data-i18n="v2s">Эрэгтэй · тод</span></button>
+              <button class="voice" aria-pressed="false"><b data-i18n="v3">Миний дуу</b><span data-i18n="v3s">10 сек дээжээр</span></button>
+            </div>
+            <div class="opts">
+              <label class="f" for="rate"><span><span data-i18n="tts.rate">Хурд</span> · <span id="rateV">1.0×</span></span><input type="range" id="rate" min="0.5" max="2" step="0.1" value="1"></label>
+              <label class="f" for="emo"><span data-i18n="tts.tone">Өнгө аяс</span><select id="emo"><option data-i18n="e1">Энгийн</option><option data-i18n="e2">Тайван, хичээлийн</option><option data-i18n="e3">Мэдээний</option><option data-i18n="e4">Баяр хөөртэй</option></select></label>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div class="col-title" style="margin:0"><h3 data-i18n="tts.out">Үүссэн аудио</h3><span class="chip ok" data-i18n="tts.ready">✓ Бэлэн · 0:14</span></div>
+            <div class="player" data-player>
+              <button class="play" data-i18n-aria="play" aria-label="Тоглуулах"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></button>
+              <div class="wave"></div>
+              <time>0:00 / 0:14</time>
+            </div>
+            <div class="out" style="min-height:0">
+              <div class="out-body" style="font-size:15px;color:var(--muted)">
+                <b style="color:var(--fg);display:block;margin-bottom:6px" data-i18n="tts.hist">Түүх</b>
+                <div class="seg"><time>11:02</time><div data-i18n="h1">“Монгол Улсын нийслэл Улаанбаатар хот нь…” · Тэмүүлэн · 0:22</div></div>
+                <div class="seg"><time>10:47</time><div data-i18n="h2">“Python хичээл 3: давталт” · Сараа · 1:05</div></div>
+              </div>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button class="btn primary" id="genBtn" data-i18n="gen">Дуу үүсгэх</button>
+              <button class="btn" data-toast="t.dl" data-i18n="dl.mp3">.mp3 татах</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CODE -->
+        <div class="panel single" data-panel="code" hidden>
+          <div class="code-main">
+            <div class="col-title"><h3 data-i18n="code.in">Код</h3><span class="hint-txt" data-i18n="code.edhint">Кодоо шууд бичих эсвэл буулгана уу</span></div>
+            <div class="code-box">
+              <div class="code-top">
+                <span class="dots"><i></i><i></i><i></i></span>
+                <span class="det" id="detLang">● Python</span>
+                <button class="ct-btn" id="loadSample" type="button" data-i18n="code.sample">Жишээ код</button>
+                <button class="ct-btn" id="clearCode" type="button" data-i18n="code.clear">Цэвэрлэх</button>
+                <select id="codeLang" data-i18n-aria="code.lang" aria-label="Програмчлалын хэл">
+                  <option data-i18n="code.auto">Автомат</option><option>Python</option><option>Java</option><option>JavaScript</option><option>TypeScript</option><option>C / C++</option><option>C#</option><option>Go</option><option>Rust</option><option>Kotlin</option><option>SQL</option>
+                </select>
+              </div>
+              <div class="editor">
+                <div class="gutter" id="gutter" aria-hidden="true"></div>
+                <div class="ed-area">
+                  <pre class="hl-layer" id="hlLayer" aria-hidden="true"></pre>
+                  <textarea id="codeInput" spellcheck="false" wrap="off" autocapitalize="off" autocomplete="off" data-i18n-ph="code.ph" placeholder="Кодоо энд бичих эсвэл буулгана уу…" data-i18n-aria="code.in" aria-label="Код"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="code-actions">
+              <button class="btn primary" id="explainBtn" data-i18n="explain">Тайлбарлах</button>
+              <div class="mode" role="group" data-i18n-aria="code.level" aria-label="Тайлбарын түвшин">
+                <button aria-pressed="false" data-i18n="m1">Анхан</button><button aria-pressed="true" data-i18n="m2">Дунд</button><button aria-pressed="false" data-i18n="m3">Мэргэжлийн</button>
+              </div>
+              <span class="kbd">Ctrl + Enter</span>
+            </div>
+            <ol class="stages" id="stages" hidden><li data-i18n="stg1">Кодыг шинжилж байна</li><li data-i18n="stg2">Тайлбар бичиж байна</li><li data-i18n="stg3">OmniVoice-оор дуу болгож байна</li></ol>
+          </div>
+
+          <div class="result" id="result">
+            <div class="col-title" style="margin:0"><h3 data-i18n="code.out">Тайлбар</h3><span class="chip gold" data-i18n="code.chip">Бичиг + Дуу</span></div>
+            <p class="stale-note" data-i18n="stale">Код өөрчлөгдсөн. Дахин тайлбарлана уу.</p>
+            <div class="player" id="codePlayer">
+              <button class="play" id="cpBtn" type="button" data-i18n-aria="listen" aria-label="Тайлбарыг сонсох"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></button>
+              <div class="wave" id="cpWave"></div>
+              <time id="cpTime">0:00 / 0:00</time>
+            </div>
+            <span class="voice-src" id="voiceSrc"></span>
+            <div class="summary" id="summary"></div>
+            <ol class="steps" id="steps"></ol>
+            <div class="res-actions">
+              <button class="btn" id="copyExpl" type="button" data-i18n="res.copy">Тайлбар хуулах</button>
+              <button class="btn gold" id="toTTSBtn" type="button" data-i18n="res.toTTS">Текст → Яриа руу илгээх →</button>
+            </div>
+            <form class="ask" id="askForm">
+              <div class="col-title" style="margin:0"><h3 data-i18n="ask.t">Кодын талаар асуух</h3><span class="chip" data-i18n="ask.chip">Дуут асуулт → Яриа → Текст</span></div>
+              <div class="ask-row">
+                <button type="button" class="mic sm" id="askMic" data-i18n-aria="ask.mic" aria-label="Дуугаар асуух">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v4"/></svg>
+                </button>
+                <input type="text" id="askInput" data-i18n-ph="ask.ph" placeholder="Жишээ: get() юу хийдэг вэ?" data-i18n-aria="ask.t" aria-label="Асуулт">
+                <button type="submit" class="btn primary" data-i18n="ask.btn">Асуух</button>
+              </div>
+              <div class="answer" id="answer" hidden></div>
+            </form>
+          </div>
+
+          <div class="practice" id="practice">
+            <div class="sec-head" style="margin:0">
+              <div><span class="eyebrow" data-i18n="pr.eyebrow">Дасгал</span><h3 class="pr-title" data-i18n="pr.title">Энэ кодоор өөрийгөө шалга</h3></div>
+              <button class="btn" id="regen" type="button" data-i18n="pr.regen">Шинэ дасгал үүсгэх</button>
+            </div>
+            <div class="pr-grid">
+              <div class="card">
+                <div class="col-title"><h3 data-i18n="pr.quiz">Шалгалт</h3><span class="chip" id="score"></span></div>
+                <div id="quiz"></div>
+              </div>
+              <div class="card task">
+                <div class="task-head">
+                  <b id="taskTitle"></b><span class="chip gold" id="taskNo"></span>
+                  <button class="btn icon-btn task-nav" id="taskPrev" type="button" aria-label="‹">‹</button>
+                  <button class="btn icon-btn task-nav" id="taskNext" type="button" aria-label="›">›</button>
+                </div>
+                <span class="mini" data-i18n="pr.task">Код бичих даалгавар</span>
+                <p id="taskText"></p>
+                <textarea class="code-edit" id="taskInput" spellcheck="false" wrap="off" autocapitalize="off" data-i18n-aria="pr.task" aria-label="Код бичих даалгавар"></textarea>
+                <div class="task-actions">
+                  <button class="btn primary" id="taskCheck" type="button" data-i18n="pr.check">Шалгах</button>
+                  <button class="btn" id="taskHint" type="button" data-i18n="pr.hint">Зөвлөмж</button>
+                  <button class="btn" id="taskSol" type="button" data-i18n="pr.sol">Шийдэл харах</button>
+                </div>
+                <div class="task-res" id="taskRes" role="status" hidden></div>
+              </div>
+            </div>
+            <p class="pr-note" data-i18n="pr.note">Прототипт дасгалыг энгийн дүрмээр үүсгэж байна. Жинхэнэ хувилбарт LLM таны кодоос үүсгэнэ.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <span data-i18n="foot1">© 2026 Хэлмэрч · ШУТИС, Улаанбаатар</span>
+    <span data-i18n="foot2">Нууцлал · Үйлчилгээний нөхцөл · Холбоо барих</span>
+  </footer>
+</main>
+
+<!-- LOGIN -->
+<div class="modal" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle" hidden>
+  <div class="scrim" data-close></div>
+  <form class="sheet" id="loginForm" novalidate>
+    <button type="button" class="close" data-close data-i18n-aria="close" aria-label="Хаах">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="sheet-head">
+      <span class="shield"><img src="must-logo.webp" alt="" width="216" height="38"></span>
+      <h2 id="loginTitle" data-i18n="login">Нэвтрэх</h2>
+    </div>
+    <p class="sub" data-i18n="lg.sub">ШУТИС-ийн оюутны код болон нууц үгээрээ нэвтэрнэ үү.</p>
+    <div class="fields">
+      <label class="f" for="studentCode"><span data-i18n="lg.code">Оюутны код</span>
+        <input type="text" id="studentCode" autocomplete="username" inputmode="text" maxlength="12" placeholder="B221910034" spellcheck="false"></label>
+      <label class="f" for="studentPw"><span data-i18n="lg.pw">Нууц үг</span>
+        <span class="pw"><input type="password" id="studentPw" autocomplete="current-password" placeholder="••••••••">
+          <button type="button" id="pwToggle" data-i18n-aria="lg.show" aria-label="Нууц үг харуулах">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button></span></label>
+      <div class="form-row">
+        <label for="remember"><input type="checkbox" id="remember"><span data-i18n="lg.rem">Намайг сана</span></label>
+        <button type="button" class="linkish" id="forgot" data-i18n="lg.forgot">Нууц үгээ мартсан?</button>
+      </div>
+      <p class="err" id="loginErr" role="alert"></p>
+      <button type="submit" class="btn primary" id="loginSubmit"><span data-i18n="login">Нэвтрэх</span></button>
+    </div>
+  </form>
+</div>
+
+<div class="credit">Built by Bayar-Erdene</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const reduced=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
+function vt(fn){const x=document.startViewTransition(fn);[x.ready,x.finished,x.updateCallbackDone].forEach(p=>p&&p.catch(()=>{}))}
+
+/* ---------- i18n ---------- */
+const I18N={
+mn:{
+ 'nav.studio':'Студи','nav.features':'Боломжууд','nav.how':'Хэрхэн ажилладаг',theme:'Өнгөний горим солих',login:'Нэвтрэх',
+ 'hero.eyebrow':'Монгол хэлний AI туслах',
+ 'hero.title':'Яриаг <em>текст</em>, текстийг <em>дуу</em>, кодыг ойлгомжтой <em>тайлбар</em> болгоно',
+ 'hero.lead':'Бичлэгээ оруул, текстээ бич, эсвэл Python, Java, JavaScript кодоо буулга. Хэлмэрч монголоор бичгээр болон дуугаар тайлбарлаж өгнө.',
+ 'hero.cta1':'Студи нээх','hero.cta2':'Хэрхэн ажилладаг вэ?',
+ f1b:'3 горим',f1:'Яриа · Текст · Код',f2b:'20+ хэл',f2:'програмчлалын',f3:'монгол дуу хоолой',
+ 'live.aria':'Шууд бичлэгийн жишээ','live.status':'Шууд хөрвүүлж байна · 00:07','live.lang':'Монгол (mn-MN)','live.acc':'Нарийвчлал 96%',
+ 'feat.eyebrow':'Боломжууд','feat.title':'Монгол хэрэглэгчид зориулсан',
+ 'feat1.h':'Яриаг текст болгоно','feat1.p':'Микрофон эсвэл бичлэгээс. Хэн ярьсныг ялгаж, цаг тэмдэглэнэ. Хадмал (.srt) гаргана.',
+ 'feat2.h':'Текстийг уншина','feat2.p':'OmniVoice-ийн монгол дуу хоолой. Хурд, өнгө аясыг тохируулж, өөрийн дуугаар ч уншуулна.',
+ 'feat3.h':'Кодыг тайлбарлана','feat3.p':'Python, Java, JS, C++, Go гэх мэт. Мөр бүрээр бичгээр тайлбарлаж, зэрэг дуугаар уншина.',
+ 'how.eyebrow':'Хэрхэн ажилладаг','how.title':'Ард талын бүтэц','how.desc':'PHP ашиглахгүй. Frontend нь Next.js, backend нь Python (FastAPI).',
+ p1s:'01 · Оролт',p1b:'Вэб интерфэйс',p1p:'Next.js + React. Аудио, текст, код хүлээн авна.',
+ p2s:'02 · Яриа таних',p2b:'STT загвар',p2p:'<code>Whisper</code> монгол хэл дээр нарийвчлан тааруулсан.',
+ p3s:'03 · Ойлгох',p3b:'LLM тайлбар',p3p:'Кодыг мөр мөрөөр задлан монголоор тайлбар бичнэ.',
+ p4s:'04 · Дуу',p4p:'Текст, тайлбарыг монгол дуу хоолой болгоно.',
+ 'how.note':'Дугаар нь өгөгдөл дамжих дарааллыг илэрхийлнэ: код тайлбарлах үед 01 → 03 → 04, яриа хөрвүүлэх үед 01 → 02.',
+ 'crumb.home':'Нүүр','st.eyebrow':'Студи','st.title':'Нэг дэлгэц, гурван ажил',
+ 'st.desc':'Доорх жишээнүүд урьдчилан бэлдсэн өгөгдөл. Жинхэнэ сервер холбогдоход яг ийм байдлаар ажиллана.',
+ t1:'Яриа → Текст',t1s:'бичлэг, микрофон',t2:'Текст → Яриа',t3:'Код тайлбарлах',t3s:'бичиг + дуу',
+ 'stt.in':'Яриа оруулах','stt.mic':'Микрофоноор бичих',micIdle:'Дарж ярьж эхэлнэ үү',micRec:'Бичиж байна',or:'эсвэл',
+ 'drop.t':'Аудио файлаа энд чирж оруулна уу','drop.s':'эсвэл дарж сонгоно · 200MB хүртэл',
+ fileDone:'2:14 мин · Боловсруулж дууссан',fileWork:'Текст болгож байна…',fileDemo:'Боловсруулж дууссан (жишээ үр дүн)',
+ 'stt.lang':'Хэл','o.mn':'Монгол','o.mix':'Монгол + Англи холимог','o.en':'Англи',
+ 'stt.spk':'Ярьж буй хүмүүс','o.auto':'Автоматаар ялгах','o.p1':'1 хүн','o.p2':'2 хүн',
+ 'stt.out':'Гарсан текст','stt.segs':'✓ 4 хэсэг',spk:'Илтгэгч',copy:'Хуулах','dl.txt':'.txt татах','dl.srt':'.srt хадмал',toTTS:'Дуугаар уншуулах →',
+ 'tts.in':'Унших текст','tts.script':'Кирилл · Латин',chars:'тэмдэгт','tts.voice':'Дуу хоолой',
+ v1:'Сараа',v1s:'Эмэгтэй · дулаан',v2:'Тэмүүлэн',v2s:'Эрэгтэй · тод',v3:'Миний дуу',v3s:'10 сек дээжээр',
+ 'tts.rate':'Хурд','tts.tone':'Өнгө аяс',e1:'Энгийн',e2:'Тайван, хичээлийн',e3:'Мэдээний',e4:'Баяр хөөртэй',
+ 'tts.out':'Үүссэн аудио','tts.ready':'✓ Бэлэн · 0:14',play:'Тоглуулах','tts.hist':'Түүх',
+ h1:'“Монгол Улсын нийслэл Улаанбаатар хот нь…” · Тэмүүлэн · 0:22',h2:'“Python хичээл 3: давталт” · Сараа · 1:05',
+ gen:'Дуу үүсгэх',genWork:'Үүсгэж байна…','dl.mp3':'.mp3 татах',
+ 'code.in':'Код',editOn:'Өөрийн кодоо буулгах',editOff:'Жишээ код руу буцах','code.det':'● Python илэрлээ','code.lang':'Програмчлалын хэл','code.auto':'Автомат',
+ 'code.ph':'Кодоо энд буулгана уу…',explain:'Тайлбарлах','code.level':'Тайлбарын түвшин',m1:'Анхан',m2:'Дунд',m3:'Мэргэжлийн',
+ 'code.out':'Тайлбар','code.chip':'Бичиг + Дуу',listen:'Тайлбарыг сонсох',line:'мөр',
+ 'code.sum':'<b>Товчоор:</b> Энэ функц өгүүлбэр доторх үг бүр хэдэн удаа давтагдсаныг тоолж, толь бичиг (dict) хэлбэрээр буцаана.',
+ foot1:'© 2026 Хэлмэрч · ШУТИС, Улаанбаатар',foot2:'Нууцлал · Үйлчилгээний нөхцөл · Холбоо барих',
+ close:'Хаах','lg.sub':'ШУТИС-ийн оюутны код болон нууц үгээрээ нэвтэрнэ үү.','lg.code':'Оюутны код','lg.pw':'Нууц үг',
+ 'lg.show':'Нууц үг харуулах','lg.hide':'Нууц үг нуух','lg.rem':'Намайг сана','lg.forgot':'Нууц үгээ мартсан?',
+ 'lg.eCode':'Оюутны кодоо оруулна уу.','lg.eCodeFmt':'Оюутны код үсэг болон тооноос бүрдэнэ. Жишээ нь: B221910034','lg.ePw':'Нууц үгээ оруулна уу.',
+ 't.dl':'Татах товч сервер холбогдсоны дараа ажиллана','t.copied':'Хуулагдлаа','t.copyFail':'Хуулж чадсангүй. Текстийг гараар сонгоно уу.',
+ 't.mic':'Прототип: микрофон сервертэй холбогдоход ажиллана','t.audio':'Аудио бэлэн боллоо',
+ 't.login':'Прототип: нэвтрэлт ШУТИС-ийн сервертэй холбогдсоны дараа ажиллана','t.forgot':'Нууц үг сэргээх хуудас дараагийн шатанд нэмэгдэнэ',
+ 'flow.a':'текст','flow.b':'тайлбар','flow.c':'Код хэсэгт дуугаар асуухад Яриа → Текст ашиглагдана.',
+ 'src.l':'Эх сурвалж:','src.stt':'Яриа → Текст','src.code':'Код тайлбар','src.back':'Буцах',
+ 't.sent':'Текст → Яриа руу илгээлээ','t.empty':'Эхлээд кодоо бичих эсвэл буулгана уу','t.sim':'Прототип: OmniVoice холбогдоход дуугаар уншина',
+ 'code.edhint':'Кодоо шууд бичих эсвэл буулгана уу','code.sample':'Жишээ код','code.clear':'Цэвэрлэх','code.detected':'илэрлээ','code.none':'● Хэл тодорхойгүй',
+ 'code.ph':'Кодоо энд бичих эсвэл буулгана уу…',
+ stg1:'Кодыг шинжилж байна',stg2:'Тайлбар бичиж байна',stg3:'OmniVoice-оор дуу болгож байна',stale:'Код өөрчлөгдсөн. Дахин тайлбарлана уу.',
+ 'vs.sim':'Дуу: OmniVoice (прототипт дуурайлга)','vs.web':'Дуу: хөтчийн {name} хоолой (OmniVoice-ийн оронд)',
+ 'res.copy':'Тайлбар хуулах','res.toTTS':'Текст → Яриа руу илгээх →',
+ 'ask.t':'Кодын талаар асуух','ask.chip':'Дуут асуулт → Яриа → Текст','ask.ph':'Жишээ: get() юу хийдэг вэ?','ask.btn':'Асуух','ask.mic':'Дуугаар асуух',
+ 'ask.rec':'Сонсож байна…','ask.sample':'get функц юу хийдэг вэ?','ask.none':'Энэ асуултад тохирох мөр олдсонгүй. Жинхэнэ хувилбарт LLM загвар бүтэн хариулна.',listen2:'Сонсох',
+ 'lvl.beg':'Анхан түвшинд: давталт гэдэг нь нэг үйлдлийг олон удаа давтах арга.','lvl.pro':'Мэргэжлийн түвшинд: өгөгдлөөр нэг удаа гүйдэг тул ажиллах хугацаа O(n).',
+ 'pr.eyebrow':'Дасгал','pr.title':'Энэ кодоор өөрийгөө шалга','pr.regen':'Шинэ дасгал үүсгэх','pr.quiz':'Шалгалт','pr.score':'Оноо','pr.task':'Код бичих даалгавар',
+ 'pr.check':'Шалгах','pr.hint':'Зөвлөмж','pr.sol':'Шийдэл харах','pr.pass':'Зөв байна! Даалгавар биелсэн.','pr.fail':'Дутуу байна:',
+ 'pr.note':'Прототипт дасгалыг энгийн дүрмээр үүсгэж байна. Жинхэнэ хувилбарт LLM таны кодоос үүсгэнэ.',
+ 'r.args':'Параметр: {a}.','r.noargs':'Параметргүй.',
+ 'r.fn.t':'Функц тодорхойлох','r.fn.d':'{name} нэртэй функц үүсгэнэ. {args}',
+ 'r.cls.t':'Класс тодорхойлох','r.cls.d':'{name} класс нь холбоотой өгөгдөл, функцуудыг нэг дор багцална.',
+ 'r.imp.t':'Сан оруулах','r.imp.d':'Гадны сан эсвэл модулийг оруулж ирнэ: {code}',
+ 'r.loop.t':'Давталт','r.loop.d':'Доорх мөрүүдийг олон дахин гүйцэтгэнэ: {code}',
+ 'r.wl.t':'While давталт','r.wl.d':'Нөхцөл үнэн байх хугацаанд давтан ажиллана: {code}',
+ 'r.if.t':'Нөхцөл шалгах','r.if.d':'{code} нөхцөл биелвэл доорх хэсэг ажиллана.',
+ 'r.else.t':'Эсрэг тохиолдол','r.else.d':'Дээрх нөхцөл биелээгүй үед энэ хэсэг ажиллана.',
+ 'r.ret.t':'Үр дүн буцаах','r.ret.d':'Функц {code} утгыг буцааж, ажиллагаагаа дуусгана.',
+ 'r.out.t':'Дэлгэцэнд хэвлэх','r.out.d':'Үр дүнг дэлгэцэнд хэвлэнэ: {code}',
+ 'r.err.t':'Алдаа зохицуулах','r.err.d':'Алдаа гарвал програм зогсохгүйгээр зохицуулна.',
+ 'r.asg.t':'Хувьсагч оноох','r.asg.d':'{name} хувьсагчид {code} утгыг онооно.',
+ 'r.upd.t':'Утга шинэчлэх','r.upd.d':'{name} хувьсагчийн утгыг өөрчилнө.',
+ 'r.gen.t':'Үйлдэл','r.gen.d':'Энэ мөр {code} үйлдлийг гүйцэтгэнэ.',
+ 'sum.pre':'<b>Товчоор:</b> Энэ {lang} код нийт {n} мөртэй.','sum.fn':'{k} функц тодорхойлсон: {names}.','sum.uses':'Ашигласан бүтэц: {list}.',
+ 'c.loop':'давталт','c.if':'нөхцөл','c.out':'хэвлэх','c.ret':'утга буцаах','c.cls':'класс','c.err':'алдаа зохицуулалт',
+ 'gq.lang':'Энэ код ямар хэл дээр бичигдсэн бэ?','gq.langw':'Түлхүүр үг, бичлэгийн хэв маягаар нь танина.',
+ 'gq.fn':'Кодонд тодорхойлсон функц аль нь вэ?','gq.fnw':'{name} функц {line}-р мөрөнд тодорхойлогдсон.',
+ 'gq.c':'Энэ кодод аль бүтэц ашиглагдсан бэ?','gq.cw':'{c} {line}-р мөрөнд байна.','gq.n':'Энэ код хэдэн мөртэй вэ?','gq.nw':'Хоосон мөрийг оруулаад {n} мөр.',
+ 'gt.call.t':'Функцээ дуудах','gt.call.d':'{name} функцийг шинэ утгаар дахин дуудаж, үр дүнг хэвлэ.','gt.call.h':'Ийм хэлбэртэй мөр бич: `{name}`',
+ 'gt.call.m1':'`{name}(...)` дуудлага алга','gt.call.m2':'Үр дүнг хэвлэх мөр алга',
+ 'gt.cm.t':'Тайлбар нэмэх','gt.cm.d':'Кодод дор хаяж 2 шинэ тайлбар (comment) мөр нэмж бич.','gt.cm.h':'Python-д `#`, JavaScript, Java, C-д `//` тэмдгээр эхэлнэ.','gt.cm.m1':'Шинэ тайлбар мөр 2-оос цөөн байна',
+ sq:[["`ugulber.lower().split()` юу хийдэг вэ?",["Жижиг үсэгтэй болгоод үгсээр хуваана","Өгүүлбэрийн уртыг тоолно","Үгсийг цагаан толгойн дарааллаар эрэмбэлнэ","Давхардсан үгсийг устгана"],"`lower()` жижиг үсэгтэй болгож, `split()` зайгаар нь хуваана."],
+  ["`toollogo.get(ug, 0)` нь үг толь бичигт байхгүй бол юу буцаах вэ?",["0","None","Алдаа гаргана","1"],"Хоёр дахь аргумент `0` нь анхдагч утга."],
+  ["`ug_toolokh(\"а б а\")` юу буцаах вэ?",["{'а': 2, 'б': 1}","{'а': 1, 'б': 1}","['а', 'б', 'а']","3"],"\"а\" 2 удаа, \"б\" 1 удаа гарна."]],
+ st:[{t:'Давтагдсан үгс',d:'Зөвхөн 2 ба түүнээс олон удаа гарсан үгсийг буцаадаг `davtagdsan(ugulber)` функц бич. `ug_toolokh`-ийг ашиглаж болно.',
+   starter:'def davtagdsan(ugulber):\n    toollogo = ug_toolokh(ugulber)\n    # Энд кодоо бичнэ үү\n',
+   hint:'`toollogo.items()`-ээр гүйж, тоо нь `>= 2` үгсийг шүүгээд буцаа.',
+   sol:'def davtagdsan(ugulber):\n    toollogo = ug_toolokh(ugulber)\n    return {ug: too for ug, too in toollogo.items() if too >= 2}\n',
+   checks:[[/def\s+davtagdsan\s*\(/,'`davtagdsan` нэртэй функц алга'],[/>=\s*2|>\s*1/,'2 ба түүнээс олон гэсэн нөхцөл (`>= 2`) алга'],[/\breturn\b/,'`return` мөр алга']]},
+  {t:'Хамгийн олон',d:'Хамгийн олон давтагдсан үгийг буцаадаг `hamgiin_olon(ugulber)` функц бич.',
+   starter:'def hamgiin_olon(ugulber):\n    # Энд кодоо бичнэ үү\n',
+   hint:'`max(toollogo, key=toollogo.get)` нь хамгийн их утгатай түлхүүрийг буцаана.',
+   sol:'def hamgiin_olon(ugulber):\n    toollogo = ug_toolokh(ugulber)\n    return max(toollogo, key=toollogo.get)\n',
+   checks:[[/def\s+hamgiin_olon\s*\(/,'`hamgiin_olon` нэртэй функц алга'],[/max\s*\(|sorted\s*\(/,'Хамгийн их утгыг олох `max()` алга'],[/\breturn\b/,'`return` мөр алга']]}],
+ hero:['Сайн байна уу, маргааш өглөө 9 цагт уулзалт болно.','Энэ Python функц юу хийдгийг тайлбарлаад өгөөч.','Энэ текстийг надад дуугаар уншаад өгөөрэй.'],
+ steps:[
+  ['Функц тодорхойлох','def түлхүүр үгээр ug_toolokh нэртэй функц үүсгэж, ugulber гэсэн нэг параметр авна.'],
+  ['Хоосон толь бичиг','toollogo = {} нь үг болон тоог хос хосоор хадгалах хоосон dict.'],
+  ['Үг бүрээр давтах','lower() бүх үсгийг жижиг болгож, split() өгүүлбэрийг зайгаар нь үг болгон хуваана.'],
+  ['Тоог нэмэгдүүлэх','get(ug, 0) нь үг өмнө байгаагүй бол 0 буцаана. Үүн дээр 1 нэмж хадгална.'],
+  ['Үр дүнг буцаах','Бүх үгийг тоолж дуусаад толь бичгийг буцаана.'],
+  ['Ажиллуулж үзэх',"Гаралт: {'сайн': 2, 'байна': 1, 'уу': 1}"]]
+},
+en:{
+ 'nav.studio':'Studio','nav.features':'Features','nav.how':'How it works',theme:'Switch color mode',login:'Log in',
+ 'hero.eyebrow':'AI assistant for Mongolian',
+ 'hero.title':'Turn speech into <em>text</em>, text into <em>voice</em>, and code into clear <em>explanations</em>',
+ 'hero.lead':'Upload a recording, type some text, or paste Python, Java or JavaScript code. Helmerch explains it in Mongolian, in writing and out loud.',
+ 'hero.cta1':'Open Studio','hero.cta2':'How does it work?',
+ f1b:'3 modes',f1:'Speech · Text · Code',f2b:'20+',f2:'programming languages',f3:'Mongolian voices',
+ 'live.aria':'Live transcription example','live.status':'Transcribing live · 00:07','live.lang':'Mongolian (mn-MN)','live.acc':'Accuracy 96%',
+ 'feat.eyebrow':'Features','feat.title':'Built for Mongolian speakers',
+ 'feat1.h':'Speech to text','feat1.p':'From the microphone or a recording. Separates speakers, adds timestamps and exports subtitles (.srt).',
+ 'feat2.h':'Text to speech','feat2.p':'Mongolian voices by OmniVoice. Adjust speed and tone, or have it read in your own voice.',
+ 'feat3.h':'Code explanation','feat3.p':'Python, Java, JS, C++, Go and more. Explained line by line in writing, read aloud at the same time.',
+ 'how.eyebrow':'How it works','how.title':'Under the hood','how.desc':'No PHP. Next.js on the frontend, Python (FastAPI) on the backend.',
+ p1s:'01 · Input',p1b:'Web interface',p1p:'Next.js + React. Accepts audio, text and code.',
+ p2s:'02 · Recognition',p2b:'STT model',p2p:'<code>Whisper</code> fine-tuned for Mongolian.',
+ p3s:'03 · Understanding',p3b:'LLM explanation',p3p:'Breaks code down line by line and writes the explanation in Mongolian.',
+ p4s:'04 · Voice',p4p:'Turns text and explanations into a Mongolian voice.',
+ 'how.note':'Numbers show the order data flows: 01 → 03 → 04 for code explanation, 01 → 02 for transcription.',
+ 'crumb.home':'Home','st.eyebrow':'Studio','st.title':'One screen, three jobs',
+ 'st.desc':'The examples below use prepared sample data. Once the server is connected, it works exactly like this.',
+ t1:'Speech → Text',t1s:'recording, mic',t2:'Text → Speech',t3:'Explain code',t3s:'text + voice',
+ 'stt.in':'Add speech','stt.mic':'Record with microphone',micIdle:'Tap to start speaking',micRec:'Recording',or:'or',
+ 'drop.t':'Drag your audio file here','drop.s':'or click to choose · up to 200MB',
+ fileDone:'2:14 min · Processing complete',fileWork:'Transcribing…',fileDemo:'Processing complete (sample result)',
+ 'stt.lang':'Language','o.mn':'Mongolian','o.mix':'Mongolian + English mixed','o.en':'English',
+ 'stt.spk':'Speakers','o.auto':'Detect automatically','o.p1':'1 person','o.p2':'2 people',
+ 'stt.out':'Transcript','stt.segs':'✓ 4 segments',spk:'Speaker',copy:'Copy','dl.txt':'Download .txt','dl.srt':'.srt subtitles',toTTS:'Read aloud →',
+ 'tts.in':'Text to read','tts.script':'Cyrillic · Latin',chars:'characters','tts.voice':'Voice',
+ v1:'Saraa',v1s:'Female · warm',v2:'Temuulen',v2s:'Male · clear',v3:'My voice',v3s:'from a 10 s sample',
+ 'tts.rate':'Speed','tts.tone':'Tone',e1:'Neutral',e2:'Calm, for lessons',e3:'News',e4:'Cheerful',
+ 'tts.out':'Generated audio','tts.ready':'✓ Ready · 0:14',play:'Play','tts.hist':'History',
+ h1:'“Монгол Улсын нийслэл Улаанбаатар хот нь…” · Temuulen · 0:22',h2:'“Python lesson 3: loops” · Saraa · 1:05',
+ gen:'Generate voice',genWork:'Generating…','dl.mp3':'Download .mp3',
+ 'code.in':'Code',editOn:'Paste your own code',editOff:'Back to sample code','code.det':'● Python detected','code.lang':'Programming language','code.auto':'Auto',
+ 'code.ph':'Paste your code here…',explain:'Explain',m1:'Beginner',m2:'Intermediate',m3:'Advanced','code.level':'Explanation level',
+ 'code.out':'Explanation','code.chip':'Text + Voice',listen:'Listen to explanation',line:'line',
+ 'code.sum':'<b>In short:</b> This function counts how many times each word appears in a sentence and returns the result as a dictionary (dict).',
+ foot1:'© 2026 Helmerch · MUST, Ulaanbaatar',foot2:'Privacy · Terms of service · Contact',
+ close:'Close','lg.sub':'Log in with your MUST student code and password.','lg.code':'Student code','lg.pw':'Password',
+ 'lg.show':'Show password','lg.hide':'Hide password','lg.rem':'Remember me','lg.forgot':'Forgot password?',
+ 'lg.eCode':'Enter your student code.','lg.eCodeFmt':'A student code is letters and digits, for example B221910034.','lg.ePw':'Enter your password.',
+ 't.dl':'Downloads will work once the server is connected','t.copied':'Copied','t.copyFail':'Couldn’t copy. Select the text manually.',
+ 't.mic':'Prototype: the microphone works once the server is connected','t.audio':'Audio is ready',
+ 't.login':'Prototype: login works once it is connected to the MUST server','t.forgot':'Password reset will be added in the next phase',
+ 'flow.a':'text','flow.b':'explanation','flow.c':'Asking about code by voice uses Speech → Text.',
+ 'src.l':'Source:','src.stt':'Speech → Text','src.code':'Code explanation','src.back':'Back',
+ 't.sent':'Sent to Text → Speech','t.empty':'Type or paste your code first','t.sim':'Prototype: OmniVoice will read this aloud once connected',
+ 'code.edhint':'Type or paste your code directly','code.sample':'Sample code','code.clear':'Clear','code.detected':'detected','code.none':'● Language unknown',
+ 'code.ph':'Type or paste your code here…',
+ stg1:'Analyzing the code',stg2:'Writing the explanation',stg3:'Voicing it with OmniVoice',stale:'The code changed. Explain it again.',
+ 'vs.sim':'Voice: OmniVoice (simulated in the prototype)','vs.web':'Voice: browser voice {name} (stands in for OmniVoice)',
+ 'res.copy':'Copy explanation','res.toTTS':'Send to Text → Speech →',
+ 'ask.t':'Ask about the code','ask.chip':'Voice question → Speech → Text','ask.ph':'Example: what does get() do?','ask.btn':'Ask','ask.mic':'Ask by voice',
+ 'ask.rec':'Listening…','ask.sample':'What does get do?','ask.none':'No matching line found. In the full version, the LLM answers this.',listen2:'Listen',
+ 'lvl.beg':'Beginner note: a loop repeats the same action many times.','lvl.pro':'Advanced note: it passes over the input once, so it runs in O(n) time.',
+ 'pr.eyebrow':'Practice','pr.title':'Test yourself on this code','pr.regen':'New practice set','pr.quiz':'Quiz','pr.score':'Score','pr.task':'Coding task',
+ 'pr.check':'Check','pr.hint':'Hint','pr.sol':'Show solution','pr.pass':'Correct! Task complete.','pr.fail':'Not quite:',
+ 'pr.note':'In the prototype, practice is generated by simple rules. The full version generates it from your code with an LLM.',
+ 'r.args':'Parameters: {a}.','r.noargs':'No parameters.',
+ 'r.fn.t':'Define a function','r.fn.d':'Creates a function named {name}. {args}',
+ 'r.cls.t':'Define a class','r.cls.d':'The {name} class bundles related data and functions together.',
+ 'r.imp.t':'Import','r.imp.d':'Brings in an external library or module: {code}',
+ 'r.loop.t':'Loop','r.loop.d':'Runs the lines below several times: {code}',
+ 'r.wl.t':'While loop','r.wl.d':'Keeps repeating while the condition is true: {code}',
+ 'r.if.t':'Check a condition','r.if.d':'The block below runs when {code} is true.',
+ 'r.else.t':'Otherwise','r.else.d':'This block runs when the condition above is false.',
+ 'r.ret.t':'Return the result','r.ret.d':'The function returns {code} and finishes.',
+ 'r.out.t':'Print to screen','r.out.d':'Prints the result: {code}',
+ 'r.err.t':'Handle errors','r.err.d':'Handles errors so the program doesn’t crash.',
+ 'r.asg.t':'Assign a variable','r.asg.d':'Assigns {code} to {name}.',
+ 'r.upd.t':'Update a value','r.upd.d':'Changes the value of {name}.',
+ 'r.gen.t':'Action','r.gen.d':'This line runs {code}.',
+ 'sum.pre':'<b>In short:</b> This {lang} code has {n} lines.','sum.fn':'It defines {k} function(s): {names}.','sum.uses':'It uses: {list}.',
+ 'c.loop':'a loop','c.if':'a condition','c.out':'printing','c.ret':'a return value','c.cls':'a class','c.err':'error handling',
+ 'gq.lang':'Which language is this code written in?','gq.langw':'You can tell from its keywords and syntax.',
+ 'gq.fn':'Which function is defined in this code?','gq.fnw':'{name} is defined on line {line}.',
+ 'gq.c':'Which construct does this code use?','gq.cw':'{c} appears on line {line}.','gq.n':'How many lines does this code have?','gq.nw':'{n} lines, counting blank ones.',
+ 'gt.call.t':'Call your function','gt.call.d':'Call {name} again with a new value and print the result.','gt.call.h':'Write a line like: `{name}`',
+ 'gt.call.m1':'No `{name}(...)` call','gt.call.m2':'No line that prints the result',
+ 'gt.cm.t':'Add comments','gt.cm.d':'Add at least 2 new comment lines to the code.','gt.cm.h':'Start them with `#` in Python, or `//` in JavaScript, Java and C.','gt.cm.m1':'Fewer than 2 new comment lines',
+ sq:[["What does `ugulber.lower().split()` do?",["Lowercases it and splits it into words","Counts the sentence length","Sorts the words alphabetically","Removes duplicate words"],"`lower()` lowercases the text and `split()` splits it at spaces."],
+  ["What does `toollogo.get(ug, 0)` return if the word isn’t in the dictionary?",["0","None","Raises an error","1"],"The second argument, `0`, is the default value."],
+  ["What does `ug_toolokh(\"а б а\")` return?",["{'а': 2, 'б': 1}","{'а': 1, 'б': 1}","['а', 'б', 'а']","3"],"\"а\" appears twice and \"б\" once."]],
+ st:[{t:'Repeated words',d:'Write a `davtagdsan(ugulber)` function that returns only the words that appear 2 or more times. You can use `ug_toolokh`.',
+   starter:'def davtagdsan(ugulber):\n    toollogo = ug_toolokh(ugulber)\n    # Write your code here\n',
+   hint:'Loop over `toollogo.items()` and keep the words whose count is `>= 2`.',
+   sol:'def davtagdsan(ugulber):\n    toollogo = ug_toolokh(ugulber)\n    return {ug: too for ug, too in toollogo.items() if too >= 2}\n',
+   checks:[[/def\s+davtagdsan\s*\(/,'No function named `davtagdsan`'],[/>=\s*2|>\s*1/,'Missing the "2 or more" condition (`>= 2`)'],[/\breturn\b/,'No `return` line']]},
+  {t:'Most frequent',d:'Write a `hamgiin_olon(ugulber)` function that returns the most frequent word.',
+   starter:'def hamgiin_olon(ugulber):\n    # Write your code here\n',
+   hint:'`max(toollogo, key=toollogo.get)` returns the key with the largest value.',
+   sol:'def hamgiin_olon(ugulber):\n    toollogo = ug_toolokh(ugulber)\n    return max(toollogo, key=toollogo.get)\n',
+   checks:[[/def\s+hamgiin_olon\s*\(/,'No function named `hamgiin_olon`'],[/max\s*\(|sorted\s*\(/,'Missing `max()` to find the largest value'],[/\breturn\b/,'No `return` line']]}],
+ hero:['Сайн байна уу, маргааш өглөө 9 цагт уулзалт болно.','Энэ Python функц юу хийдгийг тайлбарлаад өгөөч.','Энэ текстийг надад дуугаар уншаад өгөөрэй.'],
+ steps:[
+  ['Define the function','def creates a function named ug_toolokh that takes one parameter, ugulber (sentence).'],
+  ['Empty dictionary','toollogo = {} is an empty dict that stores word and count pairs.'],
+  ['Loop over each word','lower() makes every letter lowercase, and split() breaks the sentence into words at spaces.'],
+  ['Increase the count','get(ug, 0) returns 0 if the word hasn’t appeared yet. Add 1 and store it.'],
+  ['Return the result','After every word is counted, the dictionary is returned.'],
+  ['Try it out',"Output: {'сайн': 2, 'байна': 1, 'уу': 1}"]]
+}};
+let LANG='mn';
+try{const s=localStorage.getItem('helmerch-lang');if(s==='en'||s==='mn')LANG=s}catch(e){}
+const t=k=>I18N[LANG][k]??I18N.mn[k]??k;
+
+function applyLang(){
+  document.documentElement.lang=LANG;
+  $$('[data-i18n]').forEach(el=>el.textContent=t(el.dataset.i18n));
+  $$('[data-i18n-html]').forEach(el=>el.innerHTML=t(el.dataset.i18nHtml));
+  $$('[data-i18n-ph]').forEach(el=>el.placeholder=t(el.dataset.i18nPh));
+  $$('[data-i18n-aria]').forEach(el=>el.setAttribute('aria-label',t(el.dataset.i18nAria)));
+  $$('[data-spk]').forEach(el=>el.textContent=t('spk')+' '+el.dataset.spk);
+  $('.wordmark').textContent=LANG==='en'?'Helmerch':'Хэлмэрч';
+  $('#lang').dataset.v=LANG;
+  $$('#lang button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===LANG));
+  if(!rec)$('#micHint').textContent=t('micIdle');
+  if(fileIdle)$('#fileState').textContent=t('fileDone');
+  $('#pwToggle').setAttribute('aria-label',t($('#studentPw').type==='password'?'lg.show':'lg.hide'));
+  count();paintEditor();if(ttsSource)setSrc(ttsSource);
+  if(EXPL){stopCP();EXPL=buildExpl(explainedCode);renderExpl();buildPractice()}
+  requestAnimationFrame(moveInd);
+}
+$$('#lang button').forEach(b=>b.onclick=()=>{LANG=b.dataset.lang;try{localStorage.setItem('helmerch-lang',LANG)}catch(e){}applyLang()});
+
+/* ---------- toast ---------- */
+function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),2400)}
+function fillWave(el,n){el.innerHTML='';for(let i=0;i<n;i++){const b=document.createElement('i');const h=20+Math.abs(Math.sin(i*.55)*55+Math.sin(i*1.7)*25);b.style.height=Math.min(100,h)+'%';b.style.animationDelay=(i%9)*.08+'s';el.appendChild(b)}}
+
+/* ---------- theme ---------- */
+$('#themeBtn').onclick=()=>{const r=document.documentElement;const dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+  const go=()=>r.dataset.theme=dark?'light':'dark';
+  document.startViewTransition&&!reduced()?vt(go):go()};
+
+/* ---------- hero typing ---------- */
+fillWave($('#heroWave'),42);
+(function type(li=0,ci=0){const lines=t('hero');const s=lines[li%lines.length];$('#heroText').innerHTML=s.slice(0,ci)+'<span class="caret"></span>';
+  if(ci<s.length)setTimeout(()=>type(li,ci+1),45);else setTimeout(()=>type((li+1)%lines.length,0),2200)})();
+
+/* ---------- router: home | studio tabs ---------- */
+const ROUTES={'yaria-tekst':'stt','tekst-yaria':'tts','kod-tailbar':'code'};
+const HASH_OF=Object.fromEntries(Object.entries(ROUTES).map(([h,tb])=>[tb,h]));
+let view=null,tab='stt';
+const ind=$('#tabInd');
+function moveInd(){const sel=$('.tab[aria-selected="true"]');if(!sel||!sel.offsetWidth)return;
+  ind.style.width=sel.offsetWidth+'px';ind.style.transform=`translateX(${sel.offsetLeft}px)`}
+function showTab(tb,animate){tab=tb;
+  $$('.tab').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===tb));
+  $$('[data-panel]').forEach(p=>{const on=p.dataset.panel===tb;p.hidden=!on;
+    if(on&&animate){p.classList.remove('enter');void p.offsetWidth;p.classList.add('enter')}});
+  moveInd();
+  $$('#flow a').forEach(a=>a.setAttribute('aria-current',a.dataset.f===tb));
+  if(tb!=='code')stopCP();
+}
+function route(){
+  const h=location.hash.slice(1);const tb=ROUTES[h];const target=tb?'studio':'home';
+  const changing=target!==view;
+  const swap=()=>{
+    if(changing){$$('[data-view]').forEach(v=>v.hidden=v.dataset.view!==target);view=target}
+    if(tb)showTab(tb,!changing);
+    $$('nav.links a').forEach(a=>a.setAttribute('aria-current',(tb&&a.dataset.nav==='studio')||(!tb&&a.getAttribute('href')==='#'+h)?'page':'false'));
+    const sec=!tb&&h&&h!=='home'&&document.getElementById(h);
+    if(sec)sec.scrollIntoView({behavior:changing||reduced()?'auto':'smooth'});
+    else if(changing)window.scrollTo({top:0,behavior:'auto'});
+  };
+  if(changing&&view&&document.startViewTransition&&!reduced())vt(swap);else swap();
+  requestAnimationFrame(()=>{moveInd();requestAnimationFrame(()=>ind.classList.add('ready'))});
+}
+function go(hash){if(location.hash==='#'+hash)route();else location.hash=hash}
+document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(!a)return;e.preventDefault();go(a.getAttribute('href').slice(1))});
+window.addEventListener('hashchange',route);
+window.addEventListener('resize',moveInd);
+document.fonts&&document.fonts.ready.then(moveInd);
+$$('.tab').forEach(b=>b.onclick=()=>go(HASH_OF[b.dataset.tab]));
+$$('[data-jump]').forEach(a=>{a.onclick=()=>go(a.dataset.jump);a.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go(a.dataset.jump)}}});
+$$('[data-goto]').forEach(b=>b.onclick=()=>sendToTTS($$('#transcript .seg div').map(d=>d.childNodes[1].textContent).join(' '),'stt'));
+$$('[data-toast]').forEach(b=>b.onclick=()=>toast(t(b.dataset.toast)));
+$$('[data-copy]').forEach(b=>b.onclick=()=>copyText($('#'+b.dataset.copy).innerText));
+
+/* ---------- STT ---------- */
+let rec=false,recT,fileIdle=true;
+$('#micBtn').onclick=()=>{rec=!rec;$('#micBtn').classList.toggle('on',rec);
+  if(rec){let s=0;const upd=()=>$('#micHint').textContent=t('micRec')+' · 0:'+String(s).padStart(2,'0');upd();recT=setInterval(()=>{s++;upd()},1000)}
+  else{clearInterval(recT);$('#micHint').textContent=t('micIdle');toast(t('t.mic'))}};
+const drop=$('#drop');
+['dragover','dragenter'].forEach(e=>drop.addEventListener(e,ev=>{ev.preventDefault();drop.classList.add('over')}));
+['dragleave','drop'].forEach(e=>drop.addEventListener(e,ev=>{ev.preventDefault();drop.classList.remove('over')}));
+drop.addEventListener('drop',ev=>{const f=ev.dataTransfer.files[0];if(f)loadFile(f)});
+$('#audioFile').onchange=e=>{const f=e.target.files[0];if(f)loadFile(f)};
+function loadFile(f){fileIdle=false;$('#fileName').textContent=f.name;let p=0;$('#fileProg').style.width='0';
+  const iv=setInterval(()=>{p+=8;$('#fileProg').style.width=Math.min(p,100)+'%';$('#fileState').textContent=p<100?t('fileWork')+' '+Math.min(p,100)+'%':t('fileDemo');if(p>=100)clearInterval(iv)},120)}
+
+/* ---------- TTS ---------- */
+function count(){$('#ttsCount').textContent=$('#ttsText').value.length}
+$('#ttsText').oninput=count;
+$('#rate').oninput=e=>$('#rateV').textContent=(+e.target.value).toFixed(1)+'×';
+$$('#voices .voice').forEach(v=>v.onclick=()=>$$('#voices .voice').forEach(x=>x.setAttribute('aria-pressed',x===v)));
+$('#genBtn').onclick=()=>{const b=$('#genBtn');b.innerHTML='<span class="spin"></span>'+t('genWork');b.disabled=true;
+  setTimeout(()=>{b.textContent=t('gen');b.disabled=false;toast(t('t.audio'))},1200)};
+
+/* ---------- code: editor ---------- */
+const SAMPLE=[
+ 'def ug_toolokh(ugulber):',
+ '    # Үг бүрийн давтамжийг хадгалах',
+ '    toollogo = {}',
+ '    for ug in ugulber.lower().split():',
+ '        toollogo[ug] = toollogo.get(ug, 0) + 1',
+ '    return toollogo',
+ '',
+ 'print(ug_toolokh("Сайн байна уу сайн"))'].join('\n');
+const KW=new Set(('def class return if elif else for while in import from as with try except finally raise lambda pass break continue and or not is None True False '+
+ 'public private protected static final void int long float double boolean bool char string String new this function const let var async await export default '+
+ 'package func struct type interface fn mut impl pub use match include namespace using template auto null true false switch case do extends implements throws throw catch val fun '+
+ 'SELECT FROM WHERE INSERT INTO UPDATE DELETE JOIN ON GROUP BY ORDER VALUES SET CREATE TABLE AND OR NOT').split(' '));
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const mdCode=s=>esc(s).replace(/`([^`]+)`/g,'<code>$1</code>');
+const fmt=(s,o)=>s.replace(/\{(\w+)\}/g,(_,k)=>o[k]??'');
+const cut=(s,n=48)=>s.length>n?s.slice(0,n-1)+'…':s;
+const C=s=>`<code>${esc(cut(s))}</code>`;
+const norm=s=>s.replace(/\s+/g,' ').trim();
+const TOK=/(#(?!include\b).*$|\/\/.*$)|("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|`[^`]*`)|\b(\d+(?:\.\d+)?)\b|([A-Za-z_]\w*)(?=\s*\()|(#include|[A-Za-z_]\w*)/g;
+function hlLine(line){let out='',last=0,m;TOK.lastIndex=0;
+  while((m=TOK.exec(line))){out+=esc(line.slice(last,m.index));const [tk,c,s,n,f,w]=m;
+    out+=c?`<span class="c">${esc(tk)}</span>`:s?`<span class="s">${esc(tk)}</span>`:n?`<span class="n">${tk}</span>`:
+      f?(KW.has(f)?`<span class="k">${f}</span>`:`<span class="fn">${f}</span>`):KW.has(w)?`<span class="k">${esc(w)}</span>`:esc(w);
+    last=TOK.lastIndex;if(!tk)TOK.lastIndex++}
+  return out+esc(line.slice(last))}
+function detectLang(c){if(!c.trim())return '';
+  const r=[[/^\s*(SELECT|INSERT|UPDATE|DELETE|CREATE)\b/im,'SQL'],[/#include\s*</,'C / C++'],[/\bpackage\s+main\b|^\s*func\s+\w+\s*\(/m,'Go'],
+   [/\bfn\s+\w+\s*\(|\blet\s+mut\b|println!/,'Rust'],[/\bfun\s+\w+\s*\(|\bval\s+\w+\s*=/,'Kotlin'],[/\bpublic\s+(static\s+)?(class|void)|System\.out\.print/,'Java'],
+   [/\busing\s+System\b|Console\.Write/,'C#'],[/:\s*(string|number|boolean)\b|\binterface\s+\w+\s*\{/,'TypeScript'],
+   [/\bfunction\b|=>|console\.log|\b(const|let)\s+\w+\s*=/,'JavaScript'],[/^\s*def\s+\w+\s*\(|^\s*import\s+\w+|\bprint\s*\(|:\s*$/m,'Python']];
+  for(const [re,n] of r)if(re.test(c))return n;return ''}
+const ta=$('#codeInput'),layer=$('#hlLayer'),gutter=$('#gutter');
+let hlSet=[];
+function langFor(code){const s=$('#codeLang');return s.selectedIndex>0?s.value:detectLang(code)}
+function paintEditor(){const lines=ta.value.split('\n');
+  layer.innerHTML=lines.map((l,i)=>`<span class="ln${hlSet.includes(i+1)?' hl':''}">${hlLine(l)||' '}</span>`).join('');
+  gutter.innerHTML=lines.map((_,i)=>`<span>${i+1}</span>`).join('');
+  ta.style.height='auto';ta.style.height=ta.scrollHeight+'px';
+  const s=$('#codeLang'),d=langFor(ta.value);
+  $('#detLang').textContent=s.selectedIndex>0?'● '+d:d?'● '+d+' '+t('code.detected'):t('code.none')}
+function setHl(lines){hlSet=lines;$$('.ln',layer).forEach((el,i)=>el.classList.toggle('hl',lines.includes(i+1)))}
+function tabKey(e,el){if(e.key==='Tab'&&!e.shiftKey){e.preventDefault();el.setRangeText('    ',el.selectionStart,el.selectionEnd,'end');el.dispatchEvent(new Event('input'))}}
+ta.addEventListener('input',()=>{paintEditor();$('#result').classList.toggle('stale',!!EXPL&&ta.value!==explainedCode)});
+ta.addEventListener('scroll',()=>{layer.style.transform=`translateX(${-ta.scrollLeft}px)`});
+ta.addEventListener('keydown',e=>{tabKey(e,ta);if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)){e.preventDefault();runExplain()}});
+$('#codeLang').onchange=paintEditor;
+$('#loadSample').onclick=()=>{ta.value=SAMPLE;ta.dispatchEvent(new Event('input'))};
+$('#clearCode').onclick=()=>{ta.value='';ta.dispatchEvent(new Event('input'));ta.focus()};
+
+/* ---------- code: explainer (prototype rules; the real build calls the LLM) ---------- */
+const SAMPLE_LINES=[[1],[2,3],[4],[5],[6],[8]];
+function classify(s){let m;
+  if(/^(#(?!include)|\/\/|\/\*|\*)/.test(s))return{k:'cm'};
+  if(/^[}\])]+[;,)]*$|^end\b/.test(s))return{k:'close'};
+  if(/^(import\s|from\s+\S+\s+import|#include|using\s|package\s|require\(|use\s)/.test(s))return{k:'imp',code:s};
+  if(m=s.match(/\bclass\s+(\w+)/))return{k:'cls',name:m[1]};
+  if(m=s.match(/^(?:async\s+)?def\s+(\w+)\s*\(([^)]*)\)/)||s.match(/function\s*\*?\s+(\w+)\s*\(([^)]*)\)/)||
+     s.match(/^(?:export\s+)?(?:const|let|var)\s+(\w+)\s*=\s*(?:async\s*)?\(([^)]*)\)\s*=>/)||s.match(/^func\s+(?:\([^)]*\)\s*)?(\w+)\s*\(([^)]*)\)/)||
+     s.match(/^(?:pub\s+)?fn\s+(\w+)\s*\(([^)]*)\)/)||s.match(/^fun\s+(\w+)\s*\(([^)]*)\)/))return{k:'fn',name:m[1],args:m[2].trim()};
+  if(!/^(if|for|while|switch|return|else|catch|new)\b/.test(s)&&(m=s.match(/^(?:(?:public|private|protected|static|final|virtual|override|inline)\s+)*[\w<>\[\],:*&]+\s+\**(\w+)\s*\(([^)]*)\)\s*(?:const\s*)?(?:throws\s+[\w, ]+)?\{?$/)))return{k:'fn',name:m[1],args:m[2].trim()};
+  if(/^(for|foreach)\b/.test(s))return{k:'loop',code:s};
+  if(/^(while|do)\b/.test(s))return{k:'wl',code:s};
+  if(m=s.match(/^(?:if|elif|else\s+if)\b\s*\(?(.+?)\)?\s*[:{]?$/))return{k:'if',code:m[1]};
+  if(/^else\b/.test(s))return{k:'else'};
+  if(/^(try|except|catch|finally)\b|^\}\s*catch/.test(s))return{k:'err'};
+  if(m=s.match(/^return\b\s*(.*?);?$/))return{k:'ret',code:m[1]||'—'};
+  if(/(^print\s*\(|console\.log|System\.out\.print|printf\s*\(|cout\s*<<|fmt\.Print|println!|Console\.Write|^echo\b)/.test(s))return{k:'out',code:s};
+  if(m=s.match(/^(?:(?:const|let|var|int|long|float|double|String|string|auto|val|bool|boolean|char)\s+)?([A-Za-z_][\w.]*(?:\[[^\]]*\])?)\s*([+\-*\/%]?)=(?!=)\s*(.+?);?$/))
+    return m[2]?{k:'upd',name:m[1]}:{k:'asg',name:m[1],code:m[3]};
+  if(/^(\+\+|--)?\w+(\+\+|--);?$/.test(s))return{k:'upd',name:s.replace(/[+\-;]/g,'')};
+  return{k:'gen',code:s}}
+function ruleExpl(code,lang){
+  const lines=code.split('\n'),steps=[],meta={fns:[],has:{}};let pend=[];
+  lines.forEach((raw,i)=>{const s=raw.trim(),n=i+1;if(!s)return;const c=classify(s);
+    if(c.k==='cm'){pend.push(n);return}
+    if(c.k==='close'){if(steps.length)steps[steps.length-1].l.push(n);return}
+    if(!meta.has[c.k])meta.has[c.k]=n;if(c.k==='fn')meta.fns.push({name:c.name,line:n});
+    const d=fmt(t('r.'+c.k+'.d'),{name:c.name?C(c.name):'',code:C(c.code||''),args:c.args?fmt(t('r.args'),{a:C(c.args)}):t('r.noargs')});
+    steps.push({k:c.k,l:[...pend,n],t:t('r.'+c.k+'.t'),d});pend=[]});
+  const simple=k=>['asg','upd','gen'].includes(k);
+  for(let i=steps.length-1;i>0&&steps.length>9;i--){const a=steps[i-1],b=steps[i];if(simple(a.k)&&simple(b.k)){a.l.push(...b.l);a.d+=' '+b.d;steps.splice(i,1)}}
+  if(!steps.length&&pend.length)steps.push({k:'gen',l:pend,t:t('r.gen.t'),d:fmt(t('r.gen.d'),{code:C(lines[pend[0]-1].trim())})});
+  if(meta.has.wl&&!meta.has.loop)meta.has.loop=meta.has.wl;
+  const used=[...new Set(['loop','if','out','ret','cls','err'].filter(k=>meta.has[k]).map(k=>t('c.'+k)))];
+  let summary=fmt(t('sum.pre'),{lang:esc(lang||'—'),n:lines.length});
+  if(meta.fns.length)summary+=' '+fmt(t('sum.fn'),{k:meta.fns.length,names:meta.fns.map(f=>C(f.name)).join(', ')});
+  if(used.length)summary+=' '+fmt(t('sum.uses'),{list:used.join(', ')});
+  return{summary,steps,meta,lang,lines}}
+function sampleExpl(){return{sample:true,summary:t('code.sum'),lang:'Python',lines:SAMPLE.split('\n'),
+  meta:{fns:[{name:'ug_toolokh',line:1}],has:{loop:4,ret:6,out:8}},
+  steps:t('steps').map((s,i)=>({l:SAMPLE_LINES[i],t:s[0],d:esc(s[1])}))}}
+function buildExpl(code){return norm(code)===norm(SAMPLE)?sampleExpl():ruleExpl(code,langFor(code))}
+function lineLabel(l){const a=[...new Set(l)].sort((x,y)=>x-y);const contiguous=a.every((v,i)=>!i||v===a[i-1]+1);
+  return a.length===1?a[0]:contiguous?a[0]+'–'+a[a.length-1]:a.join(', ')}
+const stepText=s=>s.t+'. '+s.d.replace(/<[^>]+>/g,'');
+let EXPL=null,explainedCode='',activeStep=0,busy=false;
+const level=()=>$$('.mode button').findIndex(b=>b.getAttribute('aria-pressed')==='true');
+function renderExpl(){
+  let sum=EXPL.summary;const loop=EXPL.meta.has.loop;const lv=level();
+  if(loop&&lv===0)sum+=' '+t('lvl.beg');if(loop&&lv===2)sum+=' '+t('lvl.pro');
+  $('#summary').innerHTML=sum;
+  $('#steps').innerHTML=EXPL.steps.map((s,i)=>`<li class="step" data-i="${i}"><span class="lines">${t('line')} ${lineLabel(s.l)}</span><div><b>${esc(s.t)}</b><p>${s.d}</p></div></li>`).join('');
+  $$('#steps .step').forEach(s=>s.onclick=()=>seekStep(+s.dataset.i));
+  setupCP();activate(0)}
+function activate(i){activeStep=i;$$('#steps .step').forEach((s,j)=>s.classList.toggle('active',j===i));setHl(i>=0&&EXPL&&EXPL.steps[i]?EXPL.steps[i].l:[])}
+$$('.mode button').forEach(b=>b.onclick=()=>{$$('.mode button').forEach(x=>x.setAttribute('aria-pressed',x===b));if(EXPL)renderExpl()});
+function anim(el){el.classList.remove('enter');void el.offsetWidth;el.classList.add('enter')}
+function runExplain(){if(busy)return;if(!ta.value.trim()){toast(t('t.empty'));ta.focus();return}
+  busy=true;stopCP();const st=$('#stages'),items=$$('li',st),b=$('#explainBtn');st.hidden=false;b.disabled=true;anim(st);
+  const step=k=>{items.forEach((li,j)=>li.className=j<k?'done':j===k?'doing':'');
+    if(k<items.length){setTimeout(()=>step(k+1),reduced()?60:650);return}
+    explainedCode=ta.value;EXPL=buildExpl(explainedCode);renderExpl();buildPractice();
+    const r=$('#result');r.classList.remove('stale');$('#answer').hidden=true;anim(r);anim($('#practice'));
+    b.disabled=false;busy=false;setTimeout(()=>st.hidden=true,1200);
+    r.scrollIntoView({behavior:reduced()?'auto':'smooth',block:'start'});playCP()};
+  step(0)}
+$('#explainBtn').onclick=runExplain;
+
+/* ---------- code: voice player (browser voice if present, otherwise simulated OmniVoice) ---------- */
+const PLAY_I='<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg>';
+const PAUSE_I='<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>';
+const fmtT=x=>Math.floor(x/60)+':'+String(Math.floor(x%60)).padStart(2,'0');
+const cpBtn=$('#cpBtn'),cpWave=$('#cpWave');fillWave(cpWave,48);const cpBars=$$('i',cpWave);
+const CP={pos:0,starts:[],durs:[],total:1,iv:null};
+function pickVoice(){if(!('speechSynthesis' in window))return null;const want=LANG==='mn'?'mn':'en';
+  return speechSynthesis.getVoices().find(v=>v.lang.toLowerCase().startsWith(want))||null}
+function voiceChip(){const v=pickVoice();$('#voiceSrc').textContent=v?fmt(t('vs.web'),{name:v.name}):t('vs.sim')}
+if('speechSynthesis' in window)speechSynthesis.onvoiceschanged=()=>{if(EXPL)voiceChip()};
+function setupCP(){stopCP();CP.durs=EXPL.steps.map(s=>Math.max(2.5,stepText(s).length*.065));let a=0;
+  CP.starts=CP.durs.map(d=>{const s=a;a+=d;return s});CP.total=a||1;CP.pos=0;renderCP();voiceChip()}
+function stepAt(p){let i=0;while(i<CP.starts.length-1&&p>=CP.starts[i+1])i++;return i}
+function renderCP(){const k=Math.round(CP.pos/CP.total*cpBars.length);cpBars.forEach((b,j)=>b.classList.toggle('done',j<k));
+  $('#cpTime').textContent=fmtT(CP.pos)+' / '+fmtT(CP.total);const i=stepAt(CP.pos);if(i!==activeStep)activate(i)}
+function speakFrom(i){const v=pickVoice();if(!v)return;speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(stepText(EXPL.steps[i]));u.voice=v;u.lang=v.lang;
+  u.onend=()=>{if(!CP.iv)return;if(i+1<EXPL.steps.length){CP.pos=CP.starts[i+1];renderCP();speakFrom(i+1)}else{CP.pos=CP.total;renderCP();stopCP()}};
+  speechSynthesis.speak(u)}
+function playCP(){if(CP.iv||!EXPL)return;if(CP.pos>=CP.total-.05)CP.pos=0;cpBtn.innerHTML=PAUSE_I;const v=pickVoice();
+  if(v)speakFrom(stepAt(CP.pos));
+  CP.iv=setInterval(()=>{const i=stepAt(CP.pos),end=CP.starts[i]+CP.durs[i];
+    if(v)CP.pos=Math.min(CP.pos+.25,end-.05);
+    else{CP.pos+=.25;if(CP.pos>=CP.total){CP.pos=CP.total;renderCP();stopCP();return}}
+    renderCP()},250)}
+function stopCP(){clearInterval(CP.iv);CP.iv=null;if('speechSynthesis' in window)speechSynthesis.cancel();cpBtn.innerHTML=PLAY_I}
+cpBtn.onclick=()=>CP.iv?stopCP():playCP();
+function seekStep(i){const was=!!CP.iv;stopCP();CP.pos=CP.starts[i]||0;renderCP();activate(i);if(was)playCP()}
+cpWave.style.cursor='pointer';cpWave.onclick=e=>{const r=cpWave.getBoundingClientRect();seekStep(stepAt((e.clientX-r.left)/r.width*CP.total))};
+function speakText(text){const v=pickVoice();if(!v){toast(t('t.sim'));return}stopCP();const u=new SpeechSynthesisUtterance(text);u.voice=v;u.lang=v.lang;speechSynthesis.speak(u)}
+
+/* ---------- links between tools ---------- */
+let ttsSource=null;
+function copyText(txt){if(!navigator.clipboard){toast(t('t.copyFail'));return}navigator.clipboard.writeText(txt).then(()=>toast(t('t.copied')),()=>toast(t('t.copyFail')))}
+function setSrc(src){ttsSource=src;$('#ttsSrc').hidden=!src;if(src)$('#ttsSrcName').textContent=t('src.'+src)}
+function sendToTTS(text,src){$('#ttsText').value=text;count();setSrc(src);go('tekst-yaria');toast(t('t.sent'))}
+$('#ttsSrcBack').onclick=()=>go(ttsSource==='code'?'kod-tailbar':'yaria-tekst');
+const explText=()=>[$('#summary').innerText,...EXPL.steps.map((s,i)=>(i+1)+'. '+stepText(s))].join('\n');
+$('#copyExpl').onclick=()=>copyText(explText());
+$('#toTTSBtn').onclick=()=>{stopCP();sendToTTS(explText(),'code')};
+
+/* ---------- ask about the code (voice question goes through Speech → Text) ---------- */
+function answer(q){if(!EXPL)return;const words=q.toLowerCase().match(/[\p{L}\w]{3,}/gu)||[];const lines=explainedCode.split('\n');
+  let best=-1,score=0;
+  EXPL.steps.forEach((s,i)=>{const txt=(s.t+' '+s.d.replace(/<[^>]+>/g,'')).toLowerCase(),src=s.l.map(n=>lines[n-1]||'').join(' ').toLowerCase();
+    const sc=words.reduce((a,w)=>a+(txt.includes(w)?1:0)+(src.includes(w)?2:0),0);if(sc>score){score=sc;best=i}});
+  const a=$('#answer');a.hidden=false;
+  if(best<0){a.innerHTML=`<div class="ans-q">“${esc(q)}”</div><p>${t('ask.none')}</p>`;anim(a);return}
+  const s=EXPL.steps[best];
+  a.innerHTML=`<div class="ans-q">“${esc(q)}”</div><p><span class="lines">${t('line')} ${lineLabel(s.l)}</span> <b>${esc(s.t)}.</b> ${s.d}</p><button type="button" class="btn" id="ansListen">${t('listen2')}</button>`;
+  stopCP();activate(best);$('#ansListen').onclick=()=>speakText(stepText(s));anim(a)}
+let askRec=false;
+$('#askMic').onclick=()=>{if(askRec)return;askRec=true;const m=$('#askMic'),inp=$('#askInput');m.classList.add('on');inp.value='';inp.placeholder=t('ask.rec');
+  setTimeout(()=>{m.classList.remove('on');askRec=false;inp.placeholder=t('ask.ph');inp.value=t('ask.sample');answer(inp.value)},1800)};
+$('#askForm').addEventListener('submit',e=>{e.preventDefault();const q=$('#askInput').value.trim();if(q)answer(q)});
+
+/* ---------- practice: quiz + coding task ---------- */
+let PR=null,taskIdx=0,quizState=[];
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a}
+function mkQ(q,correct,wrong,why){const opts=shuffle([correct,...wrong]);return{q,opts,a:opts.indexOf(correct),why}}
+const countComments=c=>(c.match(/(^|\s)(#(?!include)|\/\/)/gm)||[]).length;
+function printFor(lang,call){return({Java:`System.out.println(${call});`,'C#':`Console.WriteLine(${call});`,'C / C++':`std::cout << ${call} << std::endl;`,Go:`fmt.Println(${call})`,
+  Rust:`println!("{:?}", ${call});`,JavaScript:`console.log(${call});`,TypeScript:`console.log(${call});`,Kotlin:`println(${call})`})[lang]||`print(${call})`}
+function buildPractice(){const E=EXPL;
+  if(E.sample)PR={quiz:t('sq').map(([q,o,w])=>mkQ(q,o[0],o.slice(1),w)),tasks:t('st')};
+  else{const quiz=[],tasks=[];const ALL=['Python','Java','JavaScript','C / C++','Go','Rust','SQL','C#'];
+    if(E.lang)quiz.push(mkQ(t('gq.lang'),E.lang,shuffle(ALL.filter(l=>l!==E.lang)).slice(0,3),t('gq.langw')));
+    if(E.meta.fns.length){const f=E.meta.fns[0];const decoy=['main_loop','calculate_total','parse_input','helper'].filter(d=>!E.meta.fns.some(x=>x.name===d)).slice(0,3);
+      quiz.push(mkQ(t('gq.fn'),f.name,decoy,fmt(t('gq.fnw'),{name:'`'+f.name+'`',line:f.line})))}
+    const kinds=['loop','if','out','ret','cls','err'],present=kinds.find(k=>E.meta.has[k]),absent=kinds.filter(k=>!E.meta.has[k]).slice(0,3);
+    if(present&&absent.length>=2)quiz.push(mkQ(t('gq.c'),t('c.'+present),absent.map(k=>t('c.'+k)),fmt(t('gq.cw'),{c:t('c.'+present),line:E.meta.has[present]})));
+    const n=E.lines.length;if(quiz.length<3)quiz.push(mkQ(t('gq.n'),String(n),[String(n+2),String(Math.max(1,n-1)),String(n+5)],fmt(t('gq.nw'),{n})));
+    if(E.meta.fns.length){const nm=E.meta.fns[0].name;
+      tasks.push({t:t('gt.call.t'),d:fmt(t('gt.call.d'),{name:'`'+nm+'`'}),starter:'',hint:fmt(t('gt.call.h'),{name:printFor(E.lang,nm+'(...)')}),
+        sol:printFor(E.lang,nm+'(...)')+'\n',checks:[[new RegExp('\\b'+nm+'\\s*\\('),fmt(t('gt.call.m1'),{name:nm})],[/(print|console\.log|System\.out|printf|cout|fmt\.Print|println|Console\.Write)/,t('gt.call.m2')]]})}
+    const base=countComments(explainedCode);
+    tasks.push({t:t('gt.cm.t'),d:t('gt.cm.d'),starter:explainedCode,hint:t('gt.cm.h'),sol:null,checks:[[c=>countComments(c)-base>=2,t('gt.cm.m1')]]});
+    PR={quiz,tasks}}
+  quizState=PR.quiz.map(()=>-1);taskIdx=Math.min(taskIdx,PR.tasks.length-1);renderQuiz();renderTask()}
+function renderQuiz(){
+  $('#quiz').innerHTML=PR.quiz.map((q,i)=>`<div class="q" data-qi="${i}"><p class="qq"><span class="qn">${i+1}</span><span>${mdCode(q.q)}</span></p><div class="qopts">${q.opts.map((o,j)=>`<button type="button" class="qopt" data-j="${j}">${mdCode(o)}</button>`).join('')}</div><p class="why" hidden></p></div>`).join('');
+  $$('#quiz .q').forEach(el=>{const i=+el.dataset.qi;$$('.qopt',el).forEach(b=>b.onclick=()=>{if(quizState[i]>=0)return;const j=+b.dataset.j,q=PR.quiz[i];quizState[i]=j;
+    $$('.qopt',el).forEach((x,k)=>{x.disabled=true;if(k===q.a)x.classList.add('right');else if(k===j)x.classList.add('wrong')});
+    const w=$('.why',el);w.innerHTML=(j===q.a?'✓ ':'✗ ')+mdCode(q.why);w.className='why '+(j===q.a?'ok':'bad');w.hidden=false;score()})});
+  score()}
+function score(){const ok=quizState.filter((x,i)=>x===PR.quiz[i].a).length;$('#score').textContent=`${t('pr.score')}: ${ok} / ${PR.quiz.length}`}
+function renderTask(){const k=PR.tasks[taskIdx];$('#taskTitle').textContent=k.t;$('#taskNo').textContent=`${taskIdx+1} / ${PR.tasks.length}`;
+  $('#taskText').innerHTML=mdCode(k.d);$('#taskInput').value=k.starter;$('#taskRes').hidden=true;
+  $('#taskPrev').disabled=taskIdx===0;$('#taskNext').disabled=taskIdx>=PR.tasks.length-1;$('#taskSol').hidden=!k.sol}
+$('#taskPrev').onclick=()=>{taskIdx--;renderTask()};
+$('#taskNext').onclick=()=>{taskIdx++;renderTask()};
+$('#taskInput').addEventListener('keydown',e=>tabKey(e,$('#taskInput')));
+$('#taskCheck').onclick=()=>{const k=PR.tasks[taskIdx],code=$('#taskInput').value;
+  const miss=k.checks.filter(([r])=>!(typeof r==='function'?r(code):r.test(code))).map(c=>c[1]);const res=$('#taskRes');res.hidden=false;
+  res.className='task-res '+(miss.length?'bad':'ok');
+  res.innerHTML=miss.length?`<b>${t('pr.fail')}</b><ul>${miss.map(m=>`<li>${mdCode(m)}</li>`).join('')}</ul>`:`<b>${t('pr.pass')}</b>`;anim(res)};
+$('#taskHint').onclick=()=>{const res=$('#taskRes');res.hidden=false;res.className='task-res hint';res.innerHTML=`<b>${t('pr.hint')}:</b> `+mdCode(PR.tasks[taskIdx].hint);anim(res)};
+$('#taskSol').onclick=()=>{$('#taskInput').value=PR.tasks[taskIdx].sol;$('#taskRes').hidden=true};
+$('#regen').onclick=()=>{if(!EXPL)return;buildPractice();anim($('#practice'))};
+
+/* ---------- players (simulated playback) ---------- */
+$$('[data-player]').forEach(p=>{
+  const w=$('.wave',p);fillWave(w,48);const bars=$$('i',w);const tm=$('time',p);
+  const [m,s]=tm.textContent.split('/ ')[1].split(':');const total=+m*60+ +s;
+  let pos=0,iv=null;const btn=$('.play',p);const playIcon=btn.innerHTML;const pauseIcon='<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>';
+  const fmt=x=>Math.floor(x/60)+':'+String(Math.floor(x%60)).padStart(2,'0');
+  const render=()=>{const k=Math.round(pos/total*bars.length);bars.forEach((b,j)=>b.classList.toggle('done',j<k));tm.textContent=fmt(pos)+' / '+fmt(total)};
+  btn.onclick=()=>{if(iv){clearInterval(iv);iv=null;btn.innerHTML=playIcon;return}
+    if(pos>=total)pos=0;btn.innerHTML=pauseIcon;iv=setInterval(()=>{pos+=.25;if(pos>=total){pos=total;clearInterval(iv);iv=null;btn.innerHTML=playIcon}render()},250)};
+  w.style.cursor='pointer';w.onclick=e=>{const r=w.getBoundingClientRect();pos=(e.clientX-r.left)/r.width*total;render()};
+});
+
+/* ---------- login dialog ---------- */
+const modal=$('#loginModal');let lastFocus=null;
+function openLogin(){lastFocus=document.activeElement;modal.hidden=false;$('#loginErr').textContent='';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>modal.classList.add('open')));setTimeout(()=>$('#studentCode').focus(),80)}
+function closeLogin(){modal.classList.remove('open');setTimeout(()=>{modal.hidden=true;lastFocus&&lastFocus.focus()},reduced()?0:320)}
+$('#loginBtn').onclick=openLogin;
+$$('[data-close]',modal).forEach(el=>el.onclick=closeLogin);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)closeLogin()});
+$('#pwToggle').onclick=()=>{const i=$('#studentPw');i.type=i.type==='password'?'text':'password';$('#pwToggle').setAttribute('aria-label',t(i.type==='password'?'lg.show':'lg.hide'))};
+$('#forgot').onclick=()=>toast(t('t.forgot'));
+$('#loginForm').addEventListener('submit',e=>{e.preventDefault();
+  const code=$('#studentCode').value.trim(),pw=$('#studentPw').value,err=$('#loginErr');
+  let msg='';if(!code)msg=t('lg.eCode');else if(!/^[A-Za-zА-Яа-яӨөҮү]{1,3}\d{5,10}$/.test(code))msg=t('lg.eCodeFmt');else if(!pw)msg=t('lg.ePw');
+  if(msg){err.textContent=msg;const sh=$('.sheet');sh.classList.remove('shake');void sh.offsetWidth;sh.classList.add('shake');return}
+  err.textContent='';const b=$('#loginSubmit');b.disabled=true;b.innerHTML='<span class="spin"></span>';
+  setTimeout(()=>{b.disabled=false;b.innerHTML='<span data-i18n="login">'+t('login')+'</span>';$('#studentPw').value='';closeLogin();toast(t('t.login'))},900)});
+
+/* ---------- boot ---------- */
+ta.value=SAMPLE;explainedCode=SAMPLE;EXPL=buildExpl(SAMPLE);
+applyLang();
+route();
+</script>
+</body>
+</html>
