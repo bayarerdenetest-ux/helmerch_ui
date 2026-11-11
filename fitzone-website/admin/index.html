@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="FitZone админ удирдлагын хэсэг">
+  <title>Админ — Хянах самбар | FitZone фитнес клуб</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap&subset=cyrillic" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="../assets/css/style.css?v=6" rel="stylesheet">
+</head>
+<body class="admin-body">
+  <!-- ===== Админ хажуугийн цэс (мастер хэсэг) ===== -->
+  <aside class="admin-sidebar d-flex flex-column">
+    <a href="index.html" class="brand mb-4 d-block"><i class="bi bi-lightning-charge-fill text-primary"></i> Fit<span>Zone</span> <small class="fs-6 fw-normal opacity-50">admin</small></a>
+    <ul class="nav flex-column list-unstyled"><li><a class="nav-link active" href="index.html"><i class="bi bi-speedometer2"></i>Хянах самбар</a></li><li><a class="nav-link" href="members.html"><i class="bi bi-people"></i>Гишүүд</a></li><li><a class="nav-link" href="services.html"><i class="bi bi-grid"></i>Үйлчилгээ (төрөл)</a></li><li><a class="nav-link" href="classes.html"><i class="bi bi-calendar-week"></i>Хичээлийн хуваарь</a></li><li><a class="nav-link" href="trainers.html"><i class="bi bi-person-badge"></i>Дасгалжуулагч</a></li><li><a class="nav-link" href="payments.html"><i class="bi bi-cash-stack"></i>Төлбөр</a></li><li><a class="nav-link" href="posts.html"><i class="bi bi-journal-text"></i>Нийтлэл</a></li><li><a class="nav-link" href="gallery.html"><i class="bi bi-images"></i>Галерей</a></li><li><a class="nav-link" href="slides.html"><i class="bi bi-collection-play"></i>Нүүрний слайд</a></li><li><a class="nav-link" href="media.html"><i class="bi bi-image"></i>Сайтын зураг</a></li><li><a class="nav-link" href="messages.html"><i class="bi bi-envelope"></i>Мессеж</a></li></ul>
+    <div class="mt-auto">
+      <a class="nav-link" href="../index.html"><i class="bi bi-box-arrow-up-right"></i>Сайт руу буцах</a>
+      <a class="nav-link" href="#" id="adminLogout"><i class="bi bi-box-arrow-left"></i>Гарах</a>
+    </div>
+  </aside>
+  <main class="admin-main">
+    <div class="admin-topbar d-flex align-items-center justify-content-between p-3 mb-4">
+      <div class="d-flex align-items-center gap-2">
+        <button class="btn btn-light d-lg-none" id="sidebarToggle" aria-label="Цэс"><i class="bi bi-list"></i></button>
+        <h1 class="h5 mb-0">Хянах самбар</h1>
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        <span class="small text-muted d-none d-sm-inline">admin@fitzone.mn</span>
+        <div class="icon-circle" style="width:40px;height:40px;font-size:1rem"><i class="bi bi-person-fill"></i></div>
+      </div>
+    </div>
+    <div class="row g-4 mb-4">
+      <div class="col-sm-6 col-xl-3"><div class="card kpi-card"><div class="card-body d-flex align-items-center"><div class="icon-circle me-3"><i class="bi bi-people"></i></div><div><div class="small text-muted">Нийт гишүүн</div><div class="kpi-value" id="kpiMembers">0</div></div></div></div></div>
+      <div class="col-sm-6 col-xl-3"><div class="card kpi-card"><div class="card-body d-flex align-items-center"><div class="icon-circle me-3"><i class="bi bi-person-check"></i></div><div><div class="small text-muted">Идэвхтэй гишүүн</div><div class="kpi-value" id="kpiActive">0</div></div></div></div></div>
+      <div class="col-sm-6 col-xl-3"><div class="card kpi-card"><div class="card-body d-flex align-items-center"><div class="icon-circle me-3"><i class="bi bi-cash-stack"></i></div><div><div class="small text-muted">Төлөгдсөн орлого</div><div class="kpi-value fs-5" id="kpiRevenue">0</div></div></div></div></div>
+      <div class="col-sm-6 col-xl-3"><div class="card kpi-card"><div class="card-body d-flex align-items-center"><div class="icon-circle me-3"><i class="bi bi-calendar-week"></i></div><div><div class="small text-muted">7 хоногийн хичээл</div><div class="kpi-value" id="kpiClasses">0</div></div></div></div></div>
+    </div>
+    <div class="row g-4 mb-4">
+      <div class="col-lg-8"><div class="card kpi-card h-100"><div class="card-body">
+        <h6 class="mb-1">Сарын орлого</h6><p class="small text-muted mb-2">Сүүлийн 6 сар · «Төлөгдсөн» төлөвтэй төлбөрүүдээс бодит тооцоолсон</p>
+        <div id="revenueChart" class="d-flex gap-3 align-items-end" style="height:240px"></div>
+      </div></div></div>
+      <div class="col-lg-4"><div class="card kpi-card h-100"><div class="card-body">
+        <h6 class="mb-3">Хичээлийн төрөл</h6><div id="typeBreakdown"></div>
+      </div></div></div>
+    </div>
+    <div class="card kpi-card"><div class="card-body">
+      <div class="d-flex justify-content-between mb-3"><h6 class="mb-0">Сүүлийн төлбөрүүд</h6><a href="payments.html" class="small">Бүгдийг харах</a></div>
+      <div class="table-responsive"><table class="table mb-0"><thead class="table-light"><tr><th>Гишүүн</th><th>Багц</th><th>Дүн</th><th>Төлөв</th></tr></thead><tbody id="recentPayments"></tbody></table></div>
+    </div></div>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/data.js?v=6"></script>
+  <script src="../assets/js/admin.js?v=6"></script>
+</body>
+</html>

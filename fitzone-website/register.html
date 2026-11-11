@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="FitZone-д шинээр бүртгүүлэх.">
+  <title>Бүртгүүлэх | FitZone фитнес клуб</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap&subset=cyrillic" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="assets/css/style.css?v=6" rel="stylesheet">
+</head>
+<body>
+  <!-- ===== Навигаци (мастер хэсэг) ===== -->
+  <nav class="navbar navbar-expand-xxl fz-navbar sticky-top py-3" data-bs-theme="dark">
+    <div class="container">
+      <a class="navbar-brand" href="index.html"><i class="bi bi-lightning-charge-fill text-primary"></i> Fit<span>Zone</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-label="Цэс">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Нүүр</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Үйлчилгээ</a>
+            <ul class="dropdown-menu" id="navServices">
+              <li><a class="dropdown-item fw-semibold" href="services.html">Бүх үйлчилгээ</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="service-gym.html"><i class="bi bi-lightning-charge me-2"></i>Тренажерын заал</a></li><li><a class="dropdown-item" href="service-yoga.html"><i class="bi bi-flower1 me-2"></i>Йог ба пилатес</a></li><li><a class="dropdown-item" href="service-crossfit.html"><i class="bi bi-fire me-2"></i>CrossFit ба HIIT</a></li><li><a class="dropdown-item" href="service-boxing.html"><i class="bi bi-shield-fill me-2"></i>Бокс ба кикбокс</a></li><li><a class="dropdown-item" href="service-swimming.html"><i class="bi bi-water me-2"></i>Усан сан</a></li><li><a class="dropdown-item" href="service-dance.html"><i class="bi bi-music-note-beamed me-2"></i>Бүжиг ба Zumba</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="schedule.html">Хуваарь</a></li>
+          <li class="nav-item"><a class="nav-link" href="membership.html">Гишүүнчлэл</a></li>
+          <li class="nav-item"><a class="nav-link" href="trainers.html">Дасгалжуулагчид</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Бусад</a>
+            <ul class="dropdown-menu"><li><a class="dropdown-item" href="about.html"><i class="bi bi-info-circle me-2"></i>Бидний тухай</a></li><li><a class="dropdown-item" href="bmi.html"><i class="bi bi-calculator me-2"></i>BMI тооцоолуур</a></li><li><a class="dropdown-item" href="blog.html"><i class="bi bi-journal-text me-2"></i>Мэдээ, зөвлөгөө</a></li><li><a class="dropdown-item" href="gallery.html"><i class="bi bi-images me-2"></i>Галерей</a></li><li><a class="dropdown-item" href="faq.html"><i class="bi bi-question-circle me-2"></i>Түгээмэл асуулт</a></li></ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Холбоо барих</a></li>
+        </ul>
+        <form class="d-flex my-2 my-xxl-0 me-xxl-3" action="search.html" role="search">
+          <div class="input-group input-group-sm">
+            <input class="form-control nav-search" type="search" name="q" placeholder="Хайх..." aria-label="Хайх">
+            <button class="btn btn-primary" type="submit" aria-label="Хайх"><i class="bi bi-search"></i></button>
+          </div>
+        </form>
+        <div id="navUser" class="d-flex align-items-center"></div>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+  <section class="section bg-light-fz">
+    <div class="container">
+      <div class="card fz-card auth-card"><div class="card-body p-4 p-md-5">
+        <div class="text-center mb-4"><div class="icon-circle mb-3"><i class="bi bi-person-plus"></i></div><h3>Бүртгүүлэх</h3><p class="text-muted small">Эхний 7 хоног үнэгүй туршаарай</p></div>
+        <form id="registerForm" class="needs-validation" novalidate>
+          <div class="mb-3"><label class="form-label" for="rName">Овог нэр</label><input id="rName" class="form-control" required minlength="2"><div class="invalid-feedback">Нэрээ оруулна уу.</div></div>
+          <div class="mb-3"><label class="form-label" for="rEmail">Имэйл</label><input type="email" id="rEmail" class="form-control" required><div class="invalid-feedback">Зөв имэйл оруулна уу.</div></div>
+          <div class="mb-3"><label class="form-label" for="rPhone">Утас</label><input type="tel" id="rPhone" class="form-control" pattern="[0-9]{8}" placeholder="99112233" required><div class="invalid-feedback">8 оронтой утасны дугаар оруулна уу.</div></div>
+          <div class="row g-3 mb-3">
+            <div class="col-sm-6"><label class="form-label" for="rPass">Нууц үг</label><input type="password" id="rPass" class="form-control" minlength="6" required><div class="invalid-feedback">Хамгийн багадаа 6 тэмдэгт.</div></div>
+            <div class="col-sm-6"><label class="form-label" for="rPass2">Давтах</label><input type="password" id="rPass2" class="form-control" minlength="6" required><div class="invalid-feedback">Нууц үг таарахгүй байна.</div></div>
+          </div>
+          <div class="form-check mb-4"><input class="form-check-input" type="checkbox" id="rTerms" required>
+            <label class="form-check-label small" for="rTerms"><a href="#" data-bs-toggle="modal" data-bs-target="#rulesModal" class="fw-semibold">Клубын дүрэм, нууцлалын бодлогыг</a> уншиж, зөвшөөрч байна</label>
+            <div class="invalid-feedback">Зөвшөөрөх шаардлагатай.</div></div>
+          <button class="btn btn-primary w-100 btn-lg" type="submit">Бүртгүүлэх</button>
+        </form>
+        <p class="text-center small mt-4 mb-0">Бүртгэлтэй юу? <a href="login.html" class="fw-semibold">Нэвтрэх</a></p>
+      </div></div>
+    </div>
+  </section>
+  <div class="modal fade" id="rulesModal" tabindex="-1" aria-labelledby="rulesTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header"><h5 class="modal-title" id="rulesTitle">Клубын дүрэм ба нууцлалын бодлого</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Хаах"></button></div>
+        <div class="modal-body rules-body small">
+          <h6>1. Гишүүнчлэл</h6>
+          <ul><li>Гишүүнчлэлийн карт зөвхөн эзэмшигч өөрөө ашиглана. Бусдад дамжуулахыг хориглоно.</li>
+              <li>Гишүүнчлэлийн хугацаа төлбөр баталгаажсан, сонгосон эхлэх өдрөөс тоологдоно.</li>
+              <li>Жилийн гишүүнчлэлийг жилд нэг удаа 30 хүртэл хоногоор түр зогсоож болно.</li></ul>
+          <h6>2. Заалны журам</h6>
+          <ul><li>Спортын хувцас, цэвэр гутал өмсөж, алчуур авч ирнэ.</li>
+              <li>Тоног төхөөрөмжийг ашигласны дараа жинг байранд нь буцааж, суудлыг арчина.</li>
+              <li>Бусдад саад болох чанга яриа, утсаар чанга дуу тоглуулахыг хориглоно.</li>
+              <li>Усан санд орохын өмнө заавал шүршүүрт орж, усны малгай өмсөнө.</li></ul>
+          <h6>3. Хичээлийн бүртгэл</h6>
+          <ul><li>Бүлгийн хичээлд урьдчилан бүртгүүлнэ. Хичээл эхлэхээс 2 цагийн өмнө цуцлах боломжтой.</li>
+              <li>Сард 3 удаа мэдэгдэлгүй тасалбал 7 хоног бүртгүүлэх эрх хаагдана.</li></ul>
+          <h6>4. Эрүүл мэнд, аюулгүй байдал</h6>
+          <ul><li>Зүрх судас болон бусад архаг өвчтэй бол дасгал эхлэхээс өмнө эмчид үзүүлнэ.</li>
+              <li>Дасгалжуулагчийн зааврыг дагаагүйгээс үүдсэн гэмтэлд клуб хариуцлага хүлээхгүй.</li></ul>
+          <h6>5. Нууцлалын бодлого</h6>
+          <ul><li>Таны нэр, имэйл, утас, биеийн хэмжилтийг зөвхөн үйлчилгээ үзүүлэх зорилгоор ашиглана.</li>
+              <li>Хувийн мэдээллийг таны зөвшөөрөлгүйгээр гуравдагч этгээдэд дамжуулахгүй.</li>
+              <li>Та хүссэн үедээ өөрийн мэдээллийг засах, устгуулах эрхтэй.</li></ul>
+          <p class="text-muted mb-0">Сургалтын төслийн жишээ дүрэм болно.</p>
+        </div>
+        <div class="modal-footer"><button type="button" class="btn btn-light" data-bs-dismiss="modal">Хаах</button><button type="button" class="btn btn-primary" id="rulesAccept">Уншсан, зөвшөөрч байна</button></div>
+      </div>
+    </div>
+  </div>
+
+  </main>
+
+  <!-- ===== Хөл хэсэг (мастер хэсэг) ===== -->
+  <footer class="fz-footer pt-5 pb-3 mt-auto">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <div class="brand mb-3"><i class="bi bi-lightning-charge-fill text-primary"></i> Fit<span>Zone</span></div>
+          <p>Эрүүл амьдралын хэв маягийг хүн бүрт хүртээмжтэй болгох зорилготой Улаанбаатар хотын фитнес клуб.</p>
+          <div class="d-flex gap-3 fs-5">
+            <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+            <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+            <a href="#" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+          </div>
+        </div>
+        <div class="col-6 col-lg-2">
+          <h5>Клуб</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="about.html">Бидний тухай</a></li>
+            <li class="mb-2"><a href="trainers.html">Дасгалжуулагчид</a></li>
+            <li class="mb-2"><a href="gallery.html">Галерей</a></li>
+            <li class="mb-2"><a href="blog.html">Мэдээ</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-2">
+          <h5>Үйлчилгээ</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="schedule.html">Хуваарь</a></li>
+            <li class="mb-2"><a href="membership.html">Гишүүнчлэл</a></li>
+            <li class="mb-2"><a href="bmi.html">BMI тооцоолуур</a></li>
+            <li class="mb-2"><a href="faq.html">Түгээмэл асуулт</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-4">
+          <h5>Мэдээллийн товхимол</h5>
+          <p class="small">Шинэ хичээл, урамшууллын мэдээг имэйлээр аваарай.</p>
+          <form class="newsletter-form d-flex gap-2 mb-3">
+            <input type="email" class="form-control" placeholder="Таны имэйл" required>
+            <button class="btn btn-primary" type="submit">Бүртгүүлэх</button>
+          </form>
+          <p class="small mb-1"><i class="bi bi-geo-alt me-2"></i>Улаанбаатар, Сүхбаатар дүүрэг, Энхтайвны өргөн чөлөө 15</p>
+          <p class="small mb-0"><i class="bi bi-telephone me-2"></i>7711-2233 · <i class="bi bi-envelope me-1"></i>info@fitzone.mn</p>
+        </div>
+      </div>
+      <hr class="border-secondary my-4">
+      <div class="d-flex flex-wrap justify-content-between small">
+        <span>© <span id="year">2026</span> FitZone фитнес клуб. Бүх эрх хуулиар хамгаалагдсан.</span>
+        <span><a href="faq.html">Тусламж</a> · <a href="contact.html">Холбоо барих</a> · <a href="admin/login.html">Админ</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <button id="backToTop" class="btn btn-primary shadow" aria-label="Дээш буцах"><i class="bi bi-arrow-up"></i></button>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/data.js?v=6"></script>
+  <script src="assets/js/main.js?v=6"></script>
+</body>
+</html>

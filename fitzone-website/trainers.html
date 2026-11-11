@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="FitZone фитнес клубын мэргэжлийн дасгалжуулагчид.">
+  <title>Дасгалжуулагчид | FitZone фитнес клуб</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap&subset=cyrillic" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="assets/css/style.css?v=6" rel="stylesheet">
+</head>
+<body>
+  <!-- ===== Навигаци (мастер хэсэг) ===== -->
+  <nav class="navbar navbar-expand-xxl fz-navbar sticky-top py-3" data-bs-theme="dark">
+    <div class="container">
+      <a class="navbar-brand" href="index.html"><i class="bi bi-lightning-charge-fill text-primary"></i> Fit<span>Zone</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-label="Цэс">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Нүүр</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Үйлчилгээ</a>
+            <ul class="dropdown-menu" id="navServices">
+              <li><a class="dropdown-item fw-semibold" href="services.html">Бүх үйлчилгээ</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="service-gym.html"><i class="bi bi-lightning-charge me-2"></i>Тренажерын заал</a></li><li><a class="dropdown-item" href="service-yoga.html"><i class="bi bi-flower1 me-2"></i>Йог ба пилатес</a></li><li><a class="dropdown-item" href="service-crossfit.html"><i class="bi bi-fire me-2"></i>CrossFit ба HIIT</a></li><li><a class="dropdown-item" href="service-boxing.html"><i class="bi bi-shield-fill me-2"></i>Бокс ба кикбокс</a></li><li><a class="dropdown-item" href="service-swimming.html"><i class="bi bi-water me-2"></i>Усан сан</a></li><li><a class="dropdown-item" href="service-dance.html"><i class="bi bi-music-note-beamed me-2"></i>Бүжиг ба Zumba</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="schedule.html">Хуваарь</a></li>
+          <li class="nav-item"><a class="nav-link" href="membership.html">Гишүүнчлэл</a></li>
+          <li class="nav-item"><a class="nav-link active" aria-current="page" href="trainers.html">Дасгалжуулагчид</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Бусад</a>
+            <ul class="dropdown-menu"><li><a class="dropdown-item" href="about.html"><i class="bi bi-info-circle me-2"></i>Бидний тухай</a></li><li><a class="dropdown-item" href="bmi.html"><i class="bi bi-calculator me-2"></i>BMI тооцоолуур</a></li><li><a class="dropdown-item" href="blog.html"><i class="bi bi-journal-text me-2"></i>Мэдээ, зөвлөгөө</a></li><li><a class="dropdown-item" href="gallery.html"><i class="bi bi-images me-2"></i>Галерей</a></li><li><a class="dropdown-item" href="faq.html"><i class="bi bi-question-circle me-2"></i>Түгээмэл асуулт</a></li></ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Холбоо барих</a></li>
+        </ul>
+        <form class="d-flex my-2 my-xxl-0 me-xxl-3" action="search.html" role="search">
+          <div class="input-group input-group-sm">
+            <input class="form-control nav-search" type="search" name="q" placeholder="Хайх..." aria-label="Хайх">
+            <button class="btn btn-primary" type="submit" aria-label="Хайх"><i class="bi bi-search"></i></button>
+          </div>
+        </form>
+        <div id="navUser" class="d-flex align-items-center"></div>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+  <!-- ===== Хуудасны гарчиг ===== -->
+  <header class="page-header">
+    <div class="container">
+      <nav aria-label="breadcrumb"><ol class="breadcrumb mb-2"><li class="breadcrumb-item"><a href="index.html">Нүүр</a></li><li class="breadcrumb-item active" aria-current="page">Дасгалжуулагчид</li></ol></nav>
+      <h1 class="mb-2">Дасгалжуулагчид</h1>
+      <p class="lead mb-0 opacity-75">Олон улсын гэрчилгээтэй мэргэжлийн баг</p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <div class="d-flex flex-wrap gap-2 justify-content-center mb-5" id="trainerFilters"><button class="btn btn-outline-secondary btn-sm filter-btn active" data-filter="all">Бүгд</button><button class="btn btn-outline-secondary btn-sm filter-btn" data-filter="gym">Тренажер</button><button class="btn btn-outline-secondary btn-sm filter-btn" data-filter="yoga">Йог</button><button class="btn btn-outline-secondary btn-sm filter-btn" data-filter="crossfit">CrossFit</button><button class="btn btn-outline-secondary btn-sm filter-btn" data-filter="boxing">Бокс</button><button class="btn btn-outline-secondary btn-sm filter-btn" data-filter="swimming">Усан сан</button><button class="btn btn-outline-secondary btn-sm filter-btn" data-filter="dance">Бүжиг</button></div>
+      <div class="row g-4" id="trainerGrid">
+        <div class="col-sm-6 col-lg-3 trainer-item" data-cat="boxing gym">
+          <div class="card fz-card text-center">
+            <div class="img-ph square ph-5"><i class="bi bi-person-fill"></i></div>
+            <div class="card-body">
+              <h5 class="card-title mb-1">Болд Ганбаатар</h5>
+              <p class="text-muted small mb-2">Бокс, хүч чадлын ахлах дасгалжуулагч</p>
+              <p class="small mb-3"><i class="bi bi-star-fill text-warning"></i> 4.9 · 12 жил туршлага</p>
+              <a href="trainer-bold.html" class="btn btn-sm btn-outline-primary">Профайл үзэх</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3 trainer-item" data-cat="yoga">
+          <div class="card fz-card text-center">
+            <div class="img-ph square ph-3"><i class="bi bi-person-fill"></i></div>
+            <div class="card-body">
+              <h5 class="card-title mb-1">Сараа Наранбаатар</h5>
+              <p class="text-muted small mb-2">Йог, пилатесын багш</p>
+              <p class="small mb-3"><i class="bi bi-star-fill text-warning"></i> 5.0 · 8 жил туршлага</p>
+              <a href="trainer-saraa.html" class="btn btn-sm btn-outline-primary">Профайл үзэх</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3 trainer-item" data-cat="crossfit gym">
+          <div class="card fz-card text-center">
+            <div class="img-ph square ph-6"><i class="bi bi-person-fill"></i></div>
+            <div class="card-body">
+              <h5 class="card-title mb-1">Тэмүүлэн Батсүх</h5>
+              <p class="text-muted small mb-2">CrossFit, HIIT дасгалжуулагч</p>
+              <p class="small mb-3"><i class="bi bi-star-fill text-warning"></i> 4.8 · 6 жил туршлага</p>
+              <a href="trainer-temuulen.html" class="btn btn-sm btn-outline-primary">Профайл үзэх</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3 trainer-item" data-cat="swimming dance">
+          <div class="card fz-card text-center">
+            <div class="img-ph square ph-2"><i class="bi bi-person-fill"></i></div>
+            <div class="card-body">
+              <h5 class="card-title mb-1">Ану Эрдэнэ</h5>
+              <p class="text-muted small mb-2">Сэлэлт, бүжгийн дасгалжуулагч</p>
+              <p class="small mb-3"><i class="bi bi-star-fill text-warning"></i> 4.9 · 7 жил туршлага</p>
+              <a href="trainer-anu.html" class="btn btn-sm btn-outline-primary">Профайл үзэх</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section bg-light-fz">
+    <div class="container text-center">
+      <h2>Хувийн дасгалжуулагчтай ажиллах уу?</h2>
+      <p class="text-muted mb-4">Таны зорилгод тохирсон хувийн хөтөлбөр, хооллолтын зөвлөгөө, ахиц хяналт.</p>
+      <a href="contact.html" class="btn btn-primary btn-lg">Цаг захиалах</a>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- ===== Хөл хэсэг (мастер хэсэг) ===== -->
+  <footer class="fz-footer pt-5 pb-3 mt-auto">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <div class="brand mb-3"><i class="bi bi-lightning-charge-fill text-primary"></i> Fit<span>Zone</span></div>
+          <p>Эрүүл амьдралын хэв маягийг хүн бүрт хүртээмжтэй болгох зорилготой Улаанбаатар хотын фитнес клуб.</p>
+          <div class="d-flex gap-3 fs-5">
+            <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+            <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+            <a href="#" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+          </div>
+        </div>
+        <div class="col-6 col-lg-2">
+          <h5>Клуб</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="about.html">Бидний тухай</a></li>
+            <li class="mb-2"><a href="trainers.html">Дасгалжуулагчид</a></li>
+            <li class="mb-2"><a href="gallery.html">Галерей</a></li>
+            <li class="mb-2"><a href="blog.html">Мэдээ</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-2">
+          <h5>Үйлчилгээ</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="schedule.html">Хуваарь</a></li>
+            <li class="mb-2"><a href="membership.html">Гишүүнчлэл</a></li>
+            <li class="mb-2"><a href="bmi.html">BMI тооцоолуур</a></li>
+            <li class="mb-2"><a href="faq.html">Түгээмэл асуулт</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-4">
+          <h5>Мэдээллийн товхимол</h5>
+          <p class="small">Шинэ хичээл, урамшууллын мэдээг имэйлээр аваарай.</p>
+          <form class="newsletter-form d-flex gap-2 mb-3">
+            <input type="email" class="form-control" placeholder="Таны имэйл" required>
+            <button class="btn btn-primary" type="submit">Бүртгүүлэх</button>
+          </form>
+          <p class="small mb-1"><i class="bi bi-geo-alt me-2"></i>Улаанбаатар, Сүхбаатар дүүрэг, Энхтайвны өргөн чөлөө 15</p>
+          <p class="small mb-0"><i class="bi bi-telephone me-2"></i>7711-2233 · <i class="bi bi-envelope me-1"></i>info@fitzone.mn</p>
+        </div>
+      </div>
+      <hr class="border-secondary my-4">
+      <div class="d-flex flex-wrap justify-content-between small">
+        <span>© <span id="year">2026</span> FitZone фитнес клуб. Бүх эрх хуулиар хамгаалагдсан.</span>
+        <span><a href="faq.html">Тусламж</a> · <a href="contact.html">Холбоо барих</a> · <a href="admin/login.html">Админ</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <button id="backToTop" class="btn btn-primary shadow" aria-label="Дээш буцах"><i class="bi bi-arrow-up"></i></button>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/data.js?v=6"></script>
+  <script src="assets/js/main.js?v=6"></script>
+</body>
+</html>

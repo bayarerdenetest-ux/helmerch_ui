@@ -1,0 +1,383 @@
+/* =========================================================
+   FitZone фитнес клуб — үндсэн загвар (master stylesheet)
+   ========================================================= */
+
+:root {
+  --fz-primary: #ff5a1f;
+  --fz-primary-dark: #e04810;
+  --fz-dark: #111827;
+  --fz-dark-2: #1f2937;
+  --fz-light: #f6f7fb;
+  --fz-text: #1f2937;
+  --fz-muted: #6b7280;
+  --fz-radius: 14px;
+  --fz-shadow: 0 10px 30px rgba(17, 24, 39, .08);
+}
+
+body {
+  font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: var(--fz-text);
+  background: #fff;
+}
+
+h1, h2, h3, h4, h5, .navbar-brand {
+  font-weight: 800;
+  letter-spacing: -.01em;
+}
+
+a { color: var(--fz-primary); }
+a:hover { color: var(--fz-primary-dark); }
+
+/* ---------- Товчлуур ---------- */
+.btn-primary {
+  --bs-btn-bg: var(--fz-primary);
+  --bs-btn-border-color: var(--fz-primary);
+  --bs-btn-hover-bg: var(--fz-primary-dark);
+  --bs-btn-hover-border-color: var(--fz-primary-dark);
+  --bs-btn-active-bg: var(--fz-primary-dark);
+  --bs-btn-active-border-color: var(--fz-primary-dark);
+  --bs-btn-disabled-bg: var(--fz-primary);
+  --bs-btn-disabled-border-color: var(--fz-primary);
+  font-weight: 600;
+}
+.btn-outline-primary {
+  --bs-btn-color: var(--fz-primary);
+  --bs-btn-border-color: var(--fz-primary);
+  --bs-btn-hover-bg: var(--fz-primary);
+  --bs-btn-hover-border-color: var(--fz-primary);
+  --bs-btn-active-bg: var(--fz-primary);
+  --bs-btn-active-border-color: var(--fz-primary);
+  font-weight: 600;
+}
+.text-primary { color: var(--fz-primary) !important; }
+.bg-primary { background-color: var(--fz-primary) !important; }
+.bg-dark-fz { background: var(--fz-dark); color: #fff; }
+.bg-light-fz { background: var(--fz-light); }
+
+/* ---------- Навигаци ---------- */
+.fz-navbar {
+  background: rgba(17, 24, 39, .97);
+  backdrop-filter: blur(6px);
+  z-index: 1030;
+}
+.fz-navbar .navbar-nav .nav-link { white-space: nowrap; padding-left: .6rem; padding-right: .6rem; }
+.fz-navbar .nav-search { width: 140px; }
+.fz-navbar .navbar-brand { color: #fff; font-size: 1.5rem; }
+.fz-navbar .navbar-brand span { color: var(--fz-primary); }
+.fz-navbar .nav-link { color: rgba(255, 255, 255, .78); font-weight: 500; }
+.fz-navbar .nav-link:hover,
+.fz-navbar .nav-link.active { color: #fff; }
+.fz-navbar .nav-link.active { box-shadow: inset 0 -2px 0 var(--fz-primary); }
+.fz-navbar .dropdown-menu { border: 0; box-shadow: var(--fz-shadow); border-radius: 10px; }
+.fz-navbar .dropdown-item:active { background: var(--fz-primary); }
+
+/* ---------- Bootstrap-ийн цэнхэр өнгийг брэндийн өнгөөр солих ---------- */
+.list-group-item.active { background: var(--fz-primary); border-color: var(--fz-primary); }
+.nav-pills .nav-link { color: var(--fz-dark); }
+.nav-pills .nav-link.active { background: var(--fz-primary); }
+.form-check-input:checked { background-color: var(--fz-primary); border-color: var(--fz-primary); }
+.form-check-input:focus { border-color: var(--fz-primary); box-shadow: 0 0 0 .2rem rgba(255, 90, 31, .2); }
+.page-link { color: var(--fz-primary); }
+.active > .page-link, .page-link.active { background: var(--fz-primary); border-color: var(--fz-primary); }
+
+/* Хажуугийн наалддаг карт — навигацийн доор байрлана, дээр нь гарахгүй */
+@media (min-width: 992px) {
+  .sticky-side { position: sticky; top: 110px; z-index: 1; }
+}
+
+/* ---------- Нүүр хэсэг (hero) ---------- */
+.hero {
+  position: relative;
+  min-height: 78vh;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  background:
+    linear-gradient(110deg, rgba(17, 24, 39, .95) 30%, rgba(17, 24, 39, .55)),
+    radial-gradient(circle at 80% 30%, #ff5a1f 0, transparent 45%),
+    linear-gradient(135deg, #1f2937, #0b1220);
+  overflow: hidden;
+}
+.hero .carousel-item { min-height: 78vh; }
+.hero h1 { font-size: clamp(2.2rem, 5vw, 4rem); }
+.hero .lead { color: rgba(255, 255, 255, .8); max-width: 560px; }
+.hero-icon {
+  font-size: clamp(8rem, 18vw, 16rem);
+  color: rgba(255, 90, 31, .85);
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, .4));
+}
+
+.page-header {
+  padding: 4.5rem 0 3.5rem;
+  color: #fff;
+  background:
+    radial-gradient(circle at 85% 20%, rgba(255, 90, 31, .55) 0, transparent 40%),
+    linear-gradient(135deg, #111827, #1f2937);
+}
+.page-header h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); }
+.page-header .breadcrumb-item a { color: rgba(255, 255, 255, .75); text-decoration: none; }
+.page-header .breadcrumb-item.active,
+.page-header .breadcrumb-item + .breadcrumb-item::before { color: rgba(255, 255, 255, .5); }
+
+/* ---------- Секц ---------- */
+.section { padding: 5rem 0; }
+.section-title { text-align: center; margin-bottom: 3rem; }
+.section-title .eyebrow {
+  display: inline-block;
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--fz-primary);
+  margin-bottom: .5rem;
+}
+.section-title p { color: var(--fz-muted); max-width: 620px; margin: .5rem auto 0; }
+
+/* ---------- Зургийн орлуулга (placeholder) ---------- */
+.img-ph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, .9);
+  font-size: 3.5rem;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--fz-radius);
+}
+.img-ph.wide { aspect-ratio: 16 / 9; }
+.img-ph.square { aspect-ratio: 1 / 1; }
+.ph-1 { background: linear-gradient(135deg, #ff5a1f, #ff9a3c); }
+.ph-2 { background: linear-gradient(135deg, #2563eb, #22d3ee); }
+.ph-3 { background: linear-gradient(135deg, #7c3aed, #ec4899); }
+.ph-4 { background: linear-gradient(135deg, #059669, #a3e635); }
+.ph-5 { background: linear-gradient(135deg, #111827, #4b5563); }
+.ph-6 { background: linear-gradient(135deg, #db2777, #f59e0b); }
+
+/* ---------- Карт ---------- */
+.fz-card {
+  border: 0;
+  border-radius: var(--fz-radius);
+  box-shadow: var(--fz-shadow);
+  transition: transform .25s ease, box-shadow .25s ease;
+  overflow: hidden;
+}
+/* Grid доторх картууд ижил өндөртэй байна; .h-auto өгвөл агуулгынхаа өндөртэй */
+.row > [class*="col"] > .fz-card:not(.h-auto) { height: 100%; }
+.fz-card:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(17, 24, 39, .14); }
+.fz-card .img-ph { border-radius: 0; }
+.fz-card .card-title { font-weight: 700; }
+
+.icon-circle {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.7rem;
+  background: rgba(255, 90, 31, .12);
+  color: var(--fz-primary);
+}
+
+/* ---------- Статистик ---------- */
+.stat-num { font-size: 2.6rem; font-weight: 800; color: var(--fz-primary); }
+
+/* ---------- Үнийн багц ---------- */
+.price-card { border: 2px solid transparent; }
+.price-card.featured { border-color: var(--fz-primary); }
+.price-card .price { font-size: 2.4rem; font-weight: 800; }
+.price-card .price small { font-size: 1rem; color: var(--fz-muted); font-weight: 500; }
+.price-card ul li { padding: .35rem 0; }
+.price-card ul li i { color: var(--fz-primary); margin-right: .4rem; }
+.badge-featured {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: var(--fz-primary);
+}
+
+/* ---------- Хуваарь ---------- */
+.schedule-table th { background: var(--fz-dark); color: #fff; white-space: nowrap; }
+.schedule-table td { vertical-align: middle; }
+.filter-btn.active { background: var(--fz-primary); color: #fff; border-color: var(--fz-primary); }
+
+/* ---------- Дасгалжуулагч ---------- */
+.trainer-social a {
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--fz-light);
+  color: var(--fz-dark);
+  margin-right: .3rem;
+  text-decoration: none;
+}
+.trainer-social a:hover { background: var(--fz-primary); color: #fff; }
+
+/* ---------- Галерей ---------- */
+.gallery-item { cursor: zoom-in; transition: transform .2s; }
+.gallery-item:hover { transform: scale(1.03); }
+
+/* ---------- Сэтгэгдэл ---------- */
+.testimonial { border-left: 4px solid var(--fz-primary); }
+
+/* ---------- CTA ---------- */
+.cta {
+  background: linear-gradient(120deg, var(--fz-primary), #ff8a3c);
+  color: #fff;
+  border-radius: var(--fz-radius);
+}
+
+/* ---------- Хөл хэсэг ---------- */
+.fz-footer { background: var(--fz-dark); color: rgba(255, 255, 255, .7); }
+.fz-footer h5 { color: #fff; font-size: 1rem; margin-bottom: 1rem; }
+.fz-footer a { color: rgba(255, 255, 255, .7); text-decoration: none; }
+.fz-footer a:hover { color: var(--fz-primary); }
+.fz-footer .brand { color: #fff; font-weight: 800; font-size: 1.5rem; }
+.fz-footer .brand span { color: var(--fz-primary); }
+
+#backToTop {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: none;
+  z-index: 1030;
+}
+
+/* ---------- Форм ---------- */
+.auth-card { max-width: 480px; margin: 0 auto; }
+.form-control:focus, .form-select:focus {
+  border-color: var(--fz-primary);
+  box-shadow: 0 0 0 .2rem rgba(255, 90, 31, .2);
+}
+
+/* ---------- Огноо сонгогч (Он / Сар / Өдөр) ---------- */
+.fz-date { display: flex; gap: .5rem; }
+.fz-date select:first-child { flex: 1.3; }
+.fz-date select { flex: 1; }
+
+/* ---------- Хэмжилтийн график ---------- */
+.measure-chart { width: 100%; height: 220px; }
+.measure-chart .line { fill: none; stroke: var(--fz-primary); stroke-width: 2.5; }
+.measure-chart .dot { fill: var(--fz-primary); }
+.measure-chart .grid { stroke: #e5e7eb; }
+.measure-chart text { fill: var(--fz-muted); font-size: 11px; }
+
+/* ---------- Нүүрэн дээрх бодит зураг/видео ---------- */
+.post-media { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--fz-radius); background: #000; }
+.fz-card .post-media { border-radius: 0; }
+.rules-body h6 { margin-top: 1rem; }
+
+/* ---------- Нийтлэл ---------- */
+.article-body p { line-height: 1.8; }
+.article-body h3 { margin-top: 2rem; }
+
+/* =========================================================
+   Админ хэсэг
+   ========================================================= */
+.admin-body { background: var(--fz-light); }
+.admin-sidebar {
+  background: var(--fz-dark);
+  min-height: 100vh;
+  width: 250px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 1.5rem 1rem;
+  z-index: 1040;
+  transition: transform .25s ease;
+}
+.admin-sidebar .brand { color: #fff; font-weight: 800; font-size: 1.4rem; text-decoration: none; }
+.admin-sidebar .brand span { color: var(--fz-primary); }
+.admin-sidebar .nav-link {
+  color: rgba(255, 255, 255, .7);
+  border-radius: 8px;
+  padding: .65rem .9rem;
+  margin-bottom: .2rem;
+}
+.admin-sidebar .nav-link i { margin-right: .6rem; }
+.admin-sidebar .nav-link:hover { background: rgba(255, 255, 255, .06); color: #fff; }
+.admin-sidebar .nav-link.active { background: var(--fz-primary); color: #fff; }
+.admin-main { margin-left: 250px; padding: 1.5rem; min-height: 100vh; }
+.admin-topbar { background: #fff; border-radius: var(--fz-radius); box-shadow: var(--fz-shadow); }
+.kpi-card { border: 0; border-radius: var(--fz-radius); box-shadow: var(--fz-shadow); }
+.kpi-card .kpi-value { font-size: 1.8rem; font-weight: 800; }
+.chart-bar {
+  background: linear-gradient(180deg, var(--fz-primary), #ff9a3c);
+  border-radius: 6px 6px 0 0;
+  width: 100%;
+  transition: height .6s ease;
+}
+
+@media (max-width: 991.98px) {
+  .admin-sidebar { transform: translateX(-100%); }
+  .admin-sidebar.show { transform: translateX(0); }
+  .admin-main { margin-left: 0; }
+  .section { padding: 3.5rem 0; }
+}
+
+/* ---------- Админаас оруулсан зураг ---------- */
+.img-ph { position: relative; overflow: hidden; }
+.img-ph.has-img { background: #e5e7eb; }
+.img-ph.has-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.avatar-sm { width: 40px; height: 40px; flex: 0 0 40px; aspect-ratio: 1 / 1; border-radius: 50% !important; font-size: 1.1rem; }
+.detail-media { font-size: 6rem; }
+
+/* ---------- Галерейн альбом ---------- */
+.album-card { display: block; color: inherit; text-decoration: none; }
+.album-card:hover { color: inherit; }
+.album-stack { position: relative; margin: 12px 12px 0 0; }
+.album-stack::before, .album-stack::after {
+  content: ""; position: absolute; inset: 0; border-radius: var(--fz-radius); background: #cbd5e1;
+}
+.album-stack::before { transform: translate(12px, -12px); opacity: .45; }
+.album-stack::after { transform: translate(6px, -6px); opacity: .8; background: #94a3b8; }
+.album-stack .img-ph { position: relative; z-index: 2; box-shadow: 0 10px 25px rgba(17, 24, 39, .18); transition: transform .3s ease; }
+.album-card:hover .album-stack .img-ph { transform: translate(-4px, 4px) rotate(-1deg); }
+.lightbox-media { border-radius: 12px; font-size: 8rem; }
+.lightbox-media.has-img { background: #000; }
+.lightbox-media.has-img img { object-fit: contain; }
+.lightbox-nav { position: absolute; top: 45%; transform: translateY(-50%); border-radius: 50%; width: 44px; height: 44px; z-index: 3; }
+
+/* ---------- Hero слайдерын шилжилт ---------- */
+.hero .carousel-fade .carousel-item { transition: opacity 1.2s ease-in-out; }
+.hero .carousel-fade .active.carousel-item-start,
+.hero .carousel-fade .active.carousel-item-end { transition: opacity 0s 1.2s; }
+.hero-bg {
+  position: absolute; inset: 0; background-size: cover; background-position: center;
+  transform: scale(1.18); transition: transform 8s ease-out;
+}
+.hero-bg::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(100deg, rgba(11, 18, 32, .92) 25%, rgba(11, 18, 32, .45) 70%, rgba(11, 18, 32, .2));
+}
+.hero.ready .carousel-item.active .hero-bg { transform: scale(1); }
+.hero-text > * { opacity: 0; transform: translateY(40px); transition: opacity .8s ease, transform .8s cubic-bezier(.2, .7, .2, 1); }
+.hero.ready .carousel-item.active .hero-text > * { opacity: 1; transform: none; }
+.hero.ready .carousel-item.active .hero-text > :nth-child(1) { transition-delay: .35s; }
+.hero.ready .carousel-item.active .hero-text > :nth-child(2) { transition-delay: .5s; }
+.hero.ready .carousel-item.active .hero-text > :nth-child(3) { transition-delay: .65s; }
+.hero.ready .carousel-item.active .hero-text > :nth-child(4) { transition-delay: .8s; }
+.hero-art .hero-icon { display: inline-block; opacity: 0; transform: scale(.6) rotate(-15deg); transition: opacity 1s ease .4s, transform 1.2s cubic-bezier(.2, .8, .2, 1.2) .4s; }
+.hero.ready .carousel-item.active .hero-art .hero-icon { opacity: 1; transform: none; }
+.hero .carousel-indicators [data-bs-target] {
+  position: relative; overflow: hidden; width: 48px; height: 4px; border: 0; border-radius: 4px;
+  background-color: rgba(255, 255, 255, .3); opacity: 1;
+}
+.hero .carousel-indicators .active::after {
+  content: ""; position: absolute; inset: 0; background: var(--fz-primary);
+  transform-origin: left; animation: heroProgress 6.5s linear forwards;
+}
+@keyframes heroProgress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg, .hero-text > *, .hero-art .hero-icon { transition: none !important; transform: none !important; opacity: 1 !important; }
+}
+
+/* Утасны дэлгэц: g-5 зай нь контейнерээс 12px хальж хэвтээ гүйлгэгч үүсгэдэг тул багасгана */
+@media (max-width: 991.98px) {
+  .row.g-5 { --bs-gutter-x: 1.5rem; }
+}
